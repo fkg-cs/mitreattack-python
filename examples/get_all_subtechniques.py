@@ -8,6 +8,9 @@ def main():
 
     print(f"Retrieved {len(subtechniques)} ATT&CK sub-techniques.")
 
+    #for subtechnique in subtechniques:
+            #print(subtechnique.serialize(pretty=True))
+
 
 if __name__ == "__main__":
     main()

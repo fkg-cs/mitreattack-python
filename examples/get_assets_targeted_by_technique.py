@@ -2,7 +2,7 @@ from mitreattack.stix20 import MitreAttackData
 
 
 def main():
-    mitre_attack_data = MitreAttackData("ics-attack.json")
+    mitre_attack_data = MitreAttackData("../fkg-cs/ics-attack.json")
 
     # get assets targeted by T0806
     technique_stix_id = "attack-pattern--8e7089d3-fba2-44f8-94a8-9a79c53920c4"

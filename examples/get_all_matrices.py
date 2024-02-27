@@ -7,7 +7,7 @@ def main():
     matrices = mitre_attack_data.get_matrices(remove_revoked_deprecated=True)
 
     print(f"Retrieved {len(matrices)} ATT&CK matrices: { ', '.join([m.name for m in matrices]) }")
-
+    print(matrices)
 
 if __name__ == "__main__":
     main()

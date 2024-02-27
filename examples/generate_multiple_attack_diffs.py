@@ -1,6 +1,5 @@
 from mitreattack.diffStix.changelog_helper import get_new_changelog_md
 
-
 def main():
     version_pairs = [
         ("8.0", "8.1"),
@@ -20,6 +19,7 @@ def main():
         new_version = version_pair[1]
 
         output_folder = f"output/v{old_version}-v{new_version}"
+
         print(f"Generating ATT&CK Diffs between {old_version}-{new_version}: {output_folder}")
 
         get_new_changelog_md(
