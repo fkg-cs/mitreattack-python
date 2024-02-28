@@ -1,6 +1,5 @@
 from mitreattack.stix20 import MitreAttackData
 
-
 def main():
     n_tactics=0
     n_techniques=0
@@ -10,7 +9,7 @@ def main():
     tactics = mitre_attack_data.get_tactics(remove_revoked_deprecated=True)
 
     n_tactics=len(tactics)
-    print("-----MITIGATIONS OF TECHNIQUES OF TACTICS-----\n")
+    print("-----MITIGATIONS OF TECHNIQUES OF TACTICS ENTERPISE-----\n")
 
     i = 0
     for tactic in tactics:
