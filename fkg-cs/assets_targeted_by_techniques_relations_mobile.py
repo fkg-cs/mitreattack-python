@@ -11,7 +11,7 @@ def main():
 
     n_tactics=len(tactics)
 
-    print("-----TACTICS AND TECHNIQUES IN ICS ATT&CK AND TARGETED ASSETS RELATION-----\n")
+    print("-----TACTICS AND TECHNIQUES IN MOBILE ATT&CK AND TARGETED ASSETS RELATION-----\n")
     #print(tactics[0].serialize(pretty=True))#stampa per vedere struttura oggetto stix
     i = 0
     for tactic in tactics:
