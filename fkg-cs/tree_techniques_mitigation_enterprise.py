@@ -44,7 +44,10 @@ def main():
             print(f"   {i}.{j}) {technique.name} (ATT&CK ID: {technique_external_id}) has {len(mitigations_of_techinique)} mitigations")  #: {technique.description}#stampa descrizione ma riduce legibilità
             n_mitigations=n_mitigations+len(mitigations_of_techinique)
             k=0
-            print(f"   MITIGATIONS:")
+            if len(mitigations_of_techinique)>0: print(f"   MITIGATIONS:")#controllo se esistono mitigazioni
+            else:
+                print(f"        NO MITIGATIONS KNOWN")
+
             for mitigation in mitigations_of_techinique:
               #print(mitigation)
               k=k+1
