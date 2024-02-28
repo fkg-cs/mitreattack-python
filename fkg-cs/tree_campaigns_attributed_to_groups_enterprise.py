@@ -5,15 +5,29 @@ def main():
 
     #ottengo tutti i gruppi a cui sono state attribuite tutte le campagne
     groups_attributing = mitre_attack_data.get_all_groups_attributing_to_all_campaigns()
+    #ottengo tutte le campagne enterprise
+    campaigns = mitre_attack_data.get_campaigns(remove_revoked_deprecated=True)
+    #pprint.pprint(campaigns)#stampa per vedere struttrura oggetto
+
+    #valori default campagna
+    campaing_name='campaign name'
+    campaign_external_id='CXXXXX'
+
 
     print(f"Retrived {len(groups_attributing.keys())} ENTERPRISE campaigns attributed to groups:")
     i=0
-    #pprint.pprint(groups_attributing.items())
+    #metodo ricerca mitre id tra tutti i
     for id, groups in groups_attributing.items():
         i=i+1
-        print(f"{i}) {id} was attributed to {len(groups)} {'group' if len(groups) == 1 else 'groups'} :")
+        #ciclo recupero informazioni della campagna, recupero nome e id esterno mitre
+        for campaign in campaigns:
+            if campaign['id'] == id:
+                campaign_name = campaign['name']
+                campaign_external_id = campaign.external_references[0].external_id
+
+        print(f"{i}) Campain '{campaign_name}' (ATT&CK CAMPAING ID: {campaign_external_id} ) was attributed to {len(groups)} {'group' if len(groups) == 1 else 'groups'} :")
         # groups_attributing[id][0]['object'].name
-        #pprint.pprint(groups)
+        #pprint.pprint(groups)#stampa debug
         j=0
         for group in groups:
             j=j+1
