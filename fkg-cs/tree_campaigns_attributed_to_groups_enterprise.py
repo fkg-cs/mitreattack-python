@@ -26,7 +26,7 @@ def main():
                 campaign_external_id = campaign.external_references[0].external_id
 
         print(f"{i}) Campain '{campaign_name}' (ATT&CK CAMPAING ID: {campaign_external_id} ) was attributed to {len(groups)} {'group' if len(groups) == 1 else 'groups'} :")
-        # groups_attributing[id][0]['object'].name
+
         #pprint.pprint(groups)#stampa debug
         j=0
         for group in groups:
