@@ -2,7 +2,7 @@ from mitreattack.stix20 import MitreAttackData
 import pprint
 
 def main():
-    mitre_attack_data = MitreAttackData("mobile-attack.json")
+    mitre_attack_data = MitreAttackData("json_matrix/mobile-attack.json")
 
     # get all software related to groups
     all_software_used_by_all_groups = mitre_attack_data.get_all_software_used_by_all_groups()

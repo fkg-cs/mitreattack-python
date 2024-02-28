@@ -2,7 +2,7 @@ from mitreattack.stix20 import MitreAttackData
 
 
 def main():
-    mitre_attack_data = MitreAttackData("../fkg-cs/ics-attack.json")
+    mitre_attack_data = MitreAttackData("../fkg-cs/json_matrix/ics-attack.json")
 
     assets = mitre_attack_data.get_assets(remove_revoked_deprecated=True)
 

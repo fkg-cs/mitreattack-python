@@ -1,7 +1,7 @@
 from mitreattack.stix20 import MitreAttackData
 import pprint
 def main():
-    mitre_attack_data = MitreAttackData("enterprise-attack.json")
+    mitre_attack_data = MitreAttackData("json_matrix/enterprise-attack.json")
 
     #ottengo tutti i gruppi a cui sono state attribuite tutte le campagne
     groups_attributing = mitre_attack_data.get_all_groups_attributing_to_all_campaigns()

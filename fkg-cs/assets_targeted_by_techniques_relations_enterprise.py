@@ -6,12 +6,12 @@ def main():
     n_techniques=0
     n_assets=0
 
-    mitre_attack_data = MitreAttackData("enterprise-attack.json")
+    mitre_attack_data = MitreAttackData("json_matrix/enterprise-attack.json")
     tactics = mitre_attack_data.get_tactics(remove_revoked_deprecated=True)
 
     n_tactics=len(tactics)
 
-    print("-----TACTICS AND TECHNIQUES IN ENTERPRISE ATT&CK AND TARGETED ASSETS RELATION-----\n")
+    print("-----TREE OF TACTICS AND TECHNIQUES IN ENTERPRISE ATT&CK AND TARGETED ASSETS-----\n")
     #print(tactics[0].serialize(pretty=True))#stampa per vedere struttura oggetto stix
     i = 0
     for tactic in tactics:

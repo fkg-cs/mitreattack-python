@@ -5,7 +5,7 @@ def main():
     n_techniques=0
     n_mitigations=0
 
-    mitre_attack_data = MitreAttackData("ics-attack.json")
+    mitre_attack_data = MitreAttackData("json_matrix/ics-attack.json")
     tactics = mitre_attack_data.get_tactics(remove_revoked_deprecated=True)
 
     n_tactics=len(tactics)
