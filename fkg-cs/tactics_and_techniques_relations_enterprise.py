@@ -42,7 +42,7 @@ def main():
                         ref.get("source_name") == 'mitre-attack'):  # assegno solo se mi trovo nella external reference di mitre attack
                     technique_external_id = ref.get("external_id")
 
-            print(f"   {i}.{j}) {technique.name} (ATT&CK ID: {technique_external_id})")  #: {technique.description}#stampa descrizione ma riduce legibilità
+            print(f"   {i}.{j}) {technique.name} (ATT&CK ID: {technique_external_id}): {technique.description}")  #: {technique.description}#stampa descrizione ma riduce legibilità
 
             subs = mitre_attack_data.get_subtechniques_of_technique(technique.id)
             n_subtechniques = n_subtechniques + len(subs)  # conto totale sottotecniche
