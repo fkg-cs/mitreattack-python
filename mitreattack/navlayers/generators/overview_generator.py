@@ -200,7 +200,7 @@ class OverviewLayerGenerator:
         """Update an existing dictionary of layer techniques with the appropriate matching objects.
 
         :param obj_type: the type of object to update the data with
-        :param complete_tech_listing: 'clean' technique dictionary template
+        :param complete_tech_listing: 'clean' technique dictionary templates
         :return: Updated technique dictionary
         """
         temp = complete_tech_listing

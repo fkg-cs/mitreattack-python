@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+   <p>{{output_list["id"]}}</p>
+   <h2>{{output_list["name"]}} (ATT&CK ID: {{output_list["external_id"]}})</h2>
+     <p>{{output_list["description"]}}</p>
+     <p>{{output_list["subtechniques_intestation"]}}</p>
+        {% for subtechnique in output_list["subtechniques"]%}
+        <h4>{{subtechnique["name"]}} (ATT&CK ID: {{subtechnique["external_id"]}})</h4>
+             <p>{{subtechnique["description"]}}</p>
+        {% endfor %}
+</div>
+</body>
+</html>

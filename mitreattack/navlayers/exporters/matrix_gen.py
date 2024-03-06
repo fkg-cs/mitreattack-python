@@ -302,7 +302,7 @@ class MatrixGen:
         return codex
 
     def _construct_panop(self, codex, subtechs, excludes):
-        """Create a list of lists template for the matrix layout.
+        """Create a list of lists templates for the matrix layout.
 
         :param codex: A list of lists matrix (output of .get_matrix())
         :param subtechs: A list of subtechniques that will be visible

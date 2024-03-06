@@ -108,7 +108,7 @@ class ExcelTemplates:
         return wb
 
     def export(self, showName, showID, filters=None, sort=0, scores=[], subtechs=[], exclude=[]):
-        """Export a raw customized excel template.
+        """Export a raw customized excel templates.
 
         :param showName: Whether or not to display names for each entry
         :param showID: Whether or not to display Technique IDs for each entry

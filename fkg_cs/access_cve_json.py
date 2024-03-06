@@ -98,7 +98,7 @@ def main():
     #pprint.pprint(cve_json_data.get_metrics())#STAMPA DEBUG
     print(f"                BASE SCORE: [{cve_json_data.get_cvss_baseScore()}] ")
     print(f"                ATTACK COMPLEXITY: {cve_json_data.get_cvss_attackComplexity()} ")
-    print(f"                ATTACK VECTOR: {cve_json_data.get_cvss_vectorString()} ")
+    print(f"                ATTACK VECTOR: {cve_json_data.get_cvss_attackVector()} ")
     print(f"                ATTACK AVAILABILITY IMPACT: {cve_json_data.get_cvss_availabilityImpact()} ")
     print(f"                ATTACK BASE SEVERITY: {cve_json_data.get_cvss_baseSeverity()} ")
     print(f"                ATTACK CONFIDENTIALITY IMPACT: {cve_json_data.get_cvss_confidentialityImpact()} ")
