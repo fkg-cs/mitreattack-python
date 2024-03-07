@@ -10,10 +10,24 @@
    <p>{{output_list["id"]}}</p>
    <h2>{{output_list["name"]}} (ATT&CK ID: {{output_list["external_id"]}})</h2>
      <p>{{output_list["description"]}}</p>
+     <p>PLATFORMS: {{output_list["platforms"]}}</p>
      <p>{{output_list["subtechniques_intestation"]}}</p>
         {% for subtechnique in output_list["subtechniques"]%}
         <h4>{{subtechnique["name"]}} (ATT&CK ID: {{subtechnique["external_id"]}})</h4>
              <p>{{subtechnique["description"]}}</p>
+        {% endfor %}
+   <h3>Detection of technique</h3>
+   <p>{{output_list["detection"]}}</p>
+   <h3>Mitigation of technique</h3>
+   <p>{{output_list["mitigations_intestation"]}}</p>
+   {% for mitigation in output_list["mitigations"]%}
+        <h4>{{mitigation["name"]}} (ATT&CK ID: {{mitigation["external_id"]}})</h4>
+             <p>{{mitigation["description"]}}</p>
+        {% endfor %}
+   <h3>Use in different campaigns</h3>
+   {% for campaign in output_list["campaigns"]%}
+        <h4>{{campaign["name"]}} (ATT&CK ID: {{campaign["external_id"]}})</h4>
+             <p>{{campaign["description"]}}</p>
         {% endfor %}
 </div>
 </body>

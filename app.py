@@ -20,7 +20,6 @@ def matrix_mobile():
     return render_template("matrix_template.html", output_list=get_mobile_matrix())
 @app.route('/techniques/<id>', methods=['GET'])
 def technique_details(id):
-    print(f"ID PASSATO: {id}")
     return render_template("technique_template.html", output_list=get_technique_info(id))
 
 if __name__ == "__main__":

@@ -10,28 +10,26 @@
 <body>
 <h1>{{output_list["header"]}}</h1>
 <h2>{{output_list["report"]}}</h2>
-<table>
+
 {% for tactic in output_list["tactics"]%}
-    <tr>
-    <h2>{{tactic["name"]}} (ATT&CK ID: {{tactic["external_id"]}})</h2>
+
+    <h2>Tactic: {{tactic["name"]}} (ATT&CK ID: {{tactic["external_id"]}})</h2>
      <p>{{tactic["description"]}}</p>
      <p>More at: <a href= " {{tactic["url"]}} ">{{tactic["url"]}}</a> </p>
-    </tr>
-</table>
+
      <p>{{tactic["techniques_intestation"]}}</p>
           {% for technique in tactic["techniques"]%}
-    <table>
-         <tr>
-           <h3><a href="http://127.0.0.1:5000/techniques/{{technique["external_id"]}}">{{technique["name"]}} </a> (ATT&CK ID:  {{technique["external_id"]}})</h3>
-                <p>{{technique["description"]}}</p>
-                <p>{{technique["subtechniques_intestation"]}}</p>
-                    {% for subtechnique in tactic["subtechniques"]%}
-                        <h4>{{subtechnique["name"]}} (ATT&CK ID: {{subtechnique["external_id"]}})</h4>
+           <h3>Technique: {{technique["name"]}} (ATT&CK ID:  {{technique["external_id"]}}) <a href="http://127.0.0.1:5000/techniques/{{technique["external_id"]}}"> View details</a></h3>
+                <p>      {{technique["description"]}}</p>
+                <p>      {{technique["subtechniques_intestation"]}}</p>
+                    {% for subtechnique in technique["subtechniques"]%}
+                        <h4>Subtechnique: {{subtechnique["name"]}} (ATT&CK ID: {{subtechnique["external_id"]}})</h4>
                             <p>{{subtechnique["description"]}}</p>
-                    {% endfor %}
           {% endfor %}
-         </tr>
-        {% endfor %}
-    </table>
+
+          {% endfor %}
+
+{% endfor %}
+
 </body>
 </html>
