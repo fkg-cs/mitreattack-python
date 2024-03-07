@@ -70,6 +70,9 @@ def get_technique_info(id):
             campaigns_using_technique= campaigns_enterprise_using_technique + campaigns_ics_using_technique +  campaigns_mobile_using_technique
             pprint.pprint(campaigns_using_technique)
             output_list["campaign_intestation"] =f"{technique.name} was reported to be used in {len(campaigns_using_technique)} campaigns: {len(campaigns_enterprise_using_technique)} ENTERPRISE,{len(campaigns_ics_using_technique)} ICS,{len(campaigns_mobile_using_technique)} MOBILE."
+            output_list["n_enterprise_campaigns"]= len(campaigns_enterprise_using_technique)
+            output_list["n_ics_campaigns"] = len(campaigns_ics_using_technique)
+            output_list["n_mobile_campaigns"] = len(campaigns_mobile_using_technique)
             for campaign in campaigns_using_technique:
                 my_campaign = dict()
                 my_campaign["external_id"] = campaign['object']['external_references'][0]['external_id']
