@@ -1,3 +1,5 @@
+import pprint
+
 from mitreattack.stix20 import MitreAttackData
 
 
@@ -12,7 +14,7 @@ def main():
     for c in campaigns_using_t1049:
         campaign = c["object"]
         print(f"* {campaign.name} ({mitre_attack_data.get_attack_id(campaign.id)})")
-
+    pprint.pprint(campaigns_using_t1049)
 
 if __name__ == "__main__":
     main()

@@ -24,7 +24,10 @@ def get_technique_info(id):
             output_list["external_id"] = technique_external_id
             output_list["description"] = technique.description
             output_list["platforms"] = technique.x_mitre_platforms
+            output_list["creation_date"] = f"{technique.created}"[:10]
             output_list["detection"] = technique.x_mitre_detection
+            if not output_list["detection"] :
+                output_list["detection"]=f"There are no detection methods for {technique.name}"
             output_list["subtechniques"] = []
             subs = (mitre_attack_enterprise_data.get_subtechniques_of_technique(technique.id) +
                     mitre_attack_ics_data.get_subtechniques_of_technique(technique.id) +
@@ -59,11 +62,25 @@ def get_technique_info(id):
                     output_list["mitigations"].append(my_mitigation)
             else:
                 output_list["mitigations_intestation"] = f"There are no mitigations known mitigating {technique.name}."
+            #gestione campagne
+            output_list["campaigns"]=[]
+            campaigns_enterprise_using_technique = mitre_attack_enterprise_data.get_campaigns_using_technique(technique.id)
+            campaigns_ics_using_technique = mitre_attack_ics_data.get_campaigns_using_technique(technique.id)
+            campaigns_mobile_using_technique = mitre_attack_mobile_data.get_campaigns_using_technique(technique.id)
+            campaigns_using_technique= campaigns_enterprise_using_technique + campaigns_ics_using_technique +  campaigns_mobile_using_technique
+            pprint.pprint(campaigns_using_technique)
+            output_list["campaign_intestation"] =f"{technique.name} was reported to be used in {len(campaigns_using_technique)} campaigns: {len(campaigns_enterprise_using_technique)} ENTERPRISE,{len(campaigns_ics_using_technique)} ICS,{len(campaigns_mobile_using_technique)} MOBILE."
+            for campaign in campaigns_using_technique:
+                my_campaign = dict()
+                my_campaign["external_id"] = campaign['object']['external_references'][0]['external_id']
+                my_campaign["name"] = campaign['object']['name']
+                my_campaign["description"] = campaign['object']['description']
 
+                output_list["campaigns"].append(my_campaign)
             break
 
-    #pprint.pprint(output_list)
+    pprint.pprint(output_list)
     return output_list
 
 if __name__ == "__main__":
-    get_technique_info("T1557")
+    get_technique_info("T1190")
