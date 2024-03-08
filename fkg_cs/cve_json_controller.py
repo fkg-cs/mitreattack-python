@@ -12,6 +12,12 @@ class CveData:
             self.cveMetadata = data.get('cveMetadata')
             self.containers = data.get('containers')
 
+    def get_description(self):
+        descriptions = self.containers["cna"]["descriptions"]
+        for description in descriptions:
+            value = description["value"]
+        return value
+
     def get_dataType(self):
         return self.dataType
 
@@ -153,6 +159,7 @@ def get_risk(technique_id):
         if cve_data.has_metrics():
            n_cves_with_metrics+=1
            print(f"--> CVE ID with metrics: {cve_data.get_cveId()} ")
+           print(f"--> CVE description: {cve_data.get_description()}")
            #print(f"--> PUBLISHING DATE: {cve_data.get_datePublished()}")
            print(f"--> CVE METRICS: ")
         #  pprint.pprint(cve_json_data.get_metrics())#STAMPA DEBUG
@@ -163,6 +170,7 @@ def get_risk(technique_id):
            print(f"                ATTACK CONFIDENTIALITY IMPACT: {cve_data.get_cvss_confidentialityImpact()} ")
            print(f"                ATTACK INTEGRITY IMPACT: {cve_data.get_cvss_integrityImpact()} ")
            print(f"                PRIVILEGES REQUIRED: {cve_data.get_cvss_privilegesRequired()} ")
+           print("-------------------------------------------------------------------------------")
     print(f"---REPORT:totale cve con metriche necessarie:{n_cves_with_metrics}---")
 
 
