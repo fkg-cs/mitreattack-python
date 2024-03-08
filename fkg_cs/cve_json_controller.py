@@ -149,12 +149,14 @@ def get_list_of_CVEs_from_dir(root_path):
     #pprint.pprint(list_cves_datas)
     return list_cves_datas
 def get_risk(technique_id):
+    n_cves=0
     n_cves_with_metrics=0
     list_cves_datas=[]
     print(f"--> RETRIVING INFORMATION OF All CVEs FROM dir  <--\n")
     list_cves_datas= get_list_of_CVEs_from_dir(r"C:\Users\franc\Desktop\mitrepy\mitreattack-python\fkg_cs\json_CVE")
 
     for cve_data in list_cves_datas:
+        n_cves+=1
         #itero su tutti i file json convertiti in lista di cve_data e controllo quali hanno tutte le metriche che mi servono
         if cve_data.has_metrics():
            n_cves_with_metrics+=1
@@ -171,7 +173,7 @@ def get_risk(technique_id):
            print(f"                ATTACK INTEGRITY IMPACT: {cve_data.get_cvss_integrityImpact()} ")
            print(f"                PRIVILEGES REQUIRED: {cve_data.get_cvss_privilegesRequired()} ")
            print("-------------------------------------------------------------------------------")
-    print(f"---REPORT:totale cve con metriche necessarie:{n_cves_with_metrics}---")
+    print(f"---REPORT:number of CVEs with required metrics:{n_cves_with_metrics} out of {n_cves} CVEs---")
 
 
 if __name__ == "__main__":
