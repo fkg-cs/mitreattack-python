@@ -18,8 +18,9 @@
      <p2>PLATFORMS: {{output_list["platforms"]}}</p2><br>
      <p2>CREATED: {{output_list["creation_date"]}}</p2><br><br>
      <p1>{{output_list["subtechniques_intestation"]}}</p1>
+   <h1>SCORE: [{{output_list["cvss_score"]}}]</h1>
         {% for subtechnique in output_list["subtechniques"]%}
-        <h3>{{subtechnique["name"]}} (ATT&CK ID: {{subtechnique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/'{{subtechnique['external_id']}}"> View details</a></h3>
+        <h3>{{subtechnique["name"]}} (ATT&CK ID: {{subtechnique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{subtechnique['external_id']}}"> View details</a></h3>
              <p3>{{subtechnique["description"]}}</p3>
         {% endfor %}
    <hr>
@@ -50,7 +51,7 @@
             data: {
                 labels: ['ENTERPRISE campaigns', 'ICS campaigns', 'MOBILE campaigns'],
                 datasets: [{
-                    label: 'Number of campaigns reported using {{output_list["name"]}}',
+                    label: 'using {{output_list["name"]}}',
                     data: ['{{output_list["n_enterprise_campaigns"]}}', '{{output_list["n_ics_campaigns"]}}', '{{output_list["n_mobile_campaigns"]}}'],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.5)',

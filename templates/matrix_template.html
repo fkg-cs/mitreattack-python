@@ -15,7 +15,7 @@
 
     <h2>Tactic: {{tactic["name"]}} (ATT&CK ID: {{tactic["external_id"]}})</h2>
      <p>{{tactic["description"]}}</p>
-     <p>More at: <a href= " {{tactic["url"]}} ">{{tactic["url"]}}</a> </p>
+     <p>More at: <a href= " {{tactic['url']}} ">{{tactic['url']}}</a> </p>
 
      <p>{{tactic["techniques_intestation"]}}</p>
           {% for technique in tactic["techniques"]%}

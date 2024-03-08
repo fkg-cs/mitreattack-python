@@ -15,7 +15,7 @@ def get_ics_matrix():
 
     n_tactics = len(tactics)
 
-    output_list['title'] = "ENTERPRISE ATT&CK MATRIX"
+    output_list['title'] = "ICS ATT&CK MATRIX"
     output_list['header'] = " TACTICS AND TECHNIQUES RELATIONS IN ICS ATT&CK MATRIX "
     output_list["tactics"] = []
 
@@ -31,7 +31,6 @@ def get_ics_matrix():
 
         techniques = mitre_attack_data.get_techniques_by_tactic(
             tactic.x_mitre_shortname, "ics-attack", remove_revoked_deprecated=True)
-
 
         my_tactic["techniques_intestation"] = f"There are {len(techniques)} techniques related to {tactic.name} tactic:"
         my_tactic["techniques"] = []

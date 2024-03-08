@@ -22,22 +22,22 @@ h4 {
 }
 
 p1 {
-    padding-left: 4%;
+    text-indent: 4%;
     padding-right: 3%;
 }
 
 p2 {
-    padding-left: 8%;
+    text-indent: 8%;
     padding-right: 3%;
 }
 
 p3 {
-    padding-left: 10%;
+    text-indent: 10%;
     padding-right: 3%;
 }
 
 p4 {
-    padding-left: 12%;
+    text-indent: 12%;
     padding-right: 3%;
 }
 .loader-wrapper {

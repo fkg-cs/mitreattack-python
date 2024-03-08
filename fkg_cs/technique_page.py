@@ -80,6 +80,8 @@ def get_technique_info(id):
                 my_campaign["description"] = campaign['object']['description']
 
                 output_list["campaigns"].append(my_campaign)
+            #gestione score e rischi
+
             break
 
     pprint.pprint(output_list)
