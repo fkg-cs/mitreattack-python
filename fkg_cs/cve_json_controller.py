@@ -148,33 +148,101 @@ def get_list_of_CVEs_from_dir(root_path):
     #print("returno Lista dati cve:")
     #pprint.pprint(list_cves_datas)
     return list_cves_datas
-def get_risk(technique_id):
-    n_cves=0
-    n_cves_with_metrics=0
-    list_cves_datas=[]
-    print(f"--> RETRIVING INFORMATION OF All CVEs FROM dir  <--\n")
-    list_cves_datas= get_list_of_CVEs_from_dir(r"C:\Users\franc\Desktop\mitrepy\mitreattack-python\fkg_cs\json_CVE")
 
-    for cve_data in list_cves_datas:
+def is_cve_id_present(cve_id, list_matching_cve):
+    for cve in list_matching_cve:
+        if cve['cve_id'] == cve_id:
+            return True
+    return False
+def sanitize_keyWords(keyWords):
+    keyWords= keyWords.replace("-", " ")
+    keyWords= keyWords.replace("_", " ")
+    keyWords= keyWords.replace(",", " ")
+    keyWords= keyWords.replace(".", " ")
+    return keyWords
+
+def calculate_average_baseScore(list_matching_cve):
+    sum_baseScores=0
+    for cve in list_matching_cve:
+        sum_baseScores += cve['metrics']['baseScore']
+    avg_base_score = sum_baseScores / len(list_matching_cve)
+    return round(avg_base_score, 1)#restituisco basescore arrotondato alla prima cifra decimale
+def calculate_average_attackComplexity(list_matching_cve):
+    complexity_values = {'LOW': 1, 'MEDIUM': 2, 'HIGH': 3}
+    total_complexity = 0
+    count = 0
+    for cve in list_matching_cve:
+        complexity = cve['metrics']['attackComplexity']
+        if complexity in complexity_values:
+            total_complexity += complexity_values[complexity]
+            count += 1
+
+    if count == 0:
+        return 'NONE'  # Se non ci sono valori validi, la media è 'NONE'
+    average_complexity = total_complexity / count
+    print(f"----------->media complessità attacco:{average_complexity}")
+    # Determina la stringa corrispondente alla media calcolata
+    if average_complexity < 1.1:
+        return 'LOW'
+    elif average_complexity < 2.1:
+        return 'MEDIUM'
+    elif average_complexity < 3.1:
+        return 'HIGH'
+
+def get_risk(techniqueKeyWord):
+    n_cves=0
+    n_cves_with_metrics_and_match=0
+    techniqueKeyWord = sanitize_keyWords(techniqueKeyWord)  # elaboro le keyword e tolgo eventuali caratteri problematici
+
+    print(f"--> RETRIVING INFORMATION OF All CVEs FROM dir  <--\n")
+    list_all_cves_datas= get_list_of_CVEs_from_dir(r"C:\Users\franc\Desktop\mitrepy\mitreattack-python\fkg_cs\json_CVE")#ottengo lista con i dati di TUTTI i cve presenti nella cartella json
+    list_cves_matching_keyword = []  # lista delle cve con relative metriche che hanno corrispondenza con parole chiave
+
+
+    for cve_data in list_all_cves_datas:
         n_cves+=1
         #itero su tutti i file json convertiti in lista di cve_data e controllo quali hanno tutte le metriche che mi servono
-        if cve_data.has_metrics():
-           n_cves_with_metrics+=1
-           print(f"--> CVE ID with metrics: {cve_data.get_cveId()} ")
-           print(f"--> CVE description: {cve_data.get_description()}")
-           #print(f"--> PUBLISHING DATE: {cve_data.get_datePublished()}")
-           print(f"--> CVE METRICS: ")
-        #  pprint.pprint(cve_json_data.get_metrics())#STAMPA DEBUG
-           print(f"                BASE SCORE: [{cve_data.get_cvss_baseScore()}] ")
-           print(f"                ATTACK COMPLEXITY: {cve_data.get_cvss_attackComplexity()} ")
-           print(f"                ATTACK BASE SEVERITY: {cve_data.get_cvss_baseSeverity()} ")
-           print(f"                ATTACK AVAILABILITY IMPACT: {cve_data.get_cvss_availabilityImpact()} ")
-           print(f"                ATTACK CONFIDENTIALITY IMPACT: {cve_data.get_cvss_confidentialityImpact()} ")
-           print(f"                ATTACK INTEGRITY IMPACT: {cve_data.get_cvss_integrityImpact()} ")
-           print(f"                PRIVILEGES REQUIRED: {cve_data.get_cvss_privilegesRequired()} ")
-           print("-------------------------------------------------------------------------------")
-    print(f"---REPORT:number of CVEs with required metrics:{n_cves_with_metrics} out of {n_cves} CVEs---")
+        if cve_data.has_metrics():#solo se ha le metriche che mi servono controllo la descrizione
+           cve_data_description = cve_data.get_description()
 
+           for word in techniqueKeyWord.split():
+               # controllo se la descrizione della cve ha le parole chiave della tecnica
+               if len(word) >= 4 and ( word in cve_data_description or word.lower() in cve_data_description or word.upper() in cve_data_description) or ( techniqueKeyWord.lower() in cve_data_description or techniqueKeyWord.upper() in cve_data_description ):
+                   cve_matching_keyword=dict()#dizionario contenente informazioni su singolo cve con corrispondenze su parole chiave
+                   #stampe a video per CL
+                   print(f"--> CVE ID with metrics and keywords ('{techniqueKeyWord}')->('{word}')  in description: {cve_data.get_cveId()} ")
+                   print(f"--> CVE description: {cve_data.get_description()}")
+                   print(f"--> CVE METRICS: ")
+                   print(f"                BASE SCORE: [{cve_data.get_cvss_baseScore()}] ")
+                   print(f"                ATTACK COMPLEXITY: {cve_data.get_cvss_attackComplexity()} ")
+                   print(f"                ATTACK BASE SEVERITY: {cve_data.get_cvss_baseSeverity()} ")
+                   print(f"                ATTACK CONFIDENTIALITY IMPACT: {cve_data.get_cvss_confidentialityImpact()} ")
+                   print(f"                ATTACK INTEGRITY IMPACT: {cve_data.get_cvss_integrityImpact()} ")
+                   print(f"                ATTACK AVAILABILITY IMPACT: {cve_data.get_cvss_availabilityImpact()} ")
+                   print(f"                PRIVILEGES REQUIRED: {cve_data.get_cvss_privilegesRequired()} ")
+                   print("-------------------------------------------------------------------------------")
+
+                   #popolo metriche che mi servono
+                   cve_metrics = dict()
+                   cve_metrics['baseScore']=cve_data.get_cvss_baseScore()
+                   cve_metrics['attackComplexity'] = cve_data.get_cvss_attackComplexity()
+                   cve_metrics['baseSeverity'] = cve_data.get_cvss_baseSeverity()
+                   cve_metrics['confidentialityImpact'] = cve_data.get_cvss_confidentialityImpact()
+                   cve_metrics['integrityImpact'] = cve_data.get_cvss_integrityImpact()
+                   cve_metrics['availabilityImpact'] = cve_data.get_cvss_availabilityImpact()
+                   cve_metrics['privilegesRequired'] = cve_data.get_cvss_privilegesRequired()
+                   #creo oggetto da inserire nella lista
+                   cve_matching_keyword['cve_id'] = cve_data.get_cveId()
+                   cve_matching_keyword['metrics'] = cve_metrics
+                   #aggiungo oggetto alla lista solo se il cve_id non è già presente nella lista dei match
+                   if not is_cve_id_present(cve_data.get_cveId(), list_cves_matching_keyword): #faccio append solo se non l'ho gia trovato
+                     n_cves_with_metrics_and_match += 1
+                     list_cves_matching_keyword.append(cve_matching_keyword)
+
+    print(f"---REPORT:number of CVEs with required metrics:{n_cves_with_metrics_and_match} out of {n_cves} CVEs---")
+    #print(f"---REPORT: list of matching CVEs:{list_cves_matching_keyword}")#stampa debug
+    print(f"---REPORT: media dei basescores: {calculate_average_baseScore(list_cves_matching_keyword)}")
+    print(f"---REPORT: media dei attack complexity: {calculate_average_attackComplexity(list_cves_matching_keyword)}")
 
 if __name__ == "__main__":
-    get_risk("T1133")
+    get_risk("cross-site scripting (XSS)")
