@@ -1,4 +1,6 @@
 import pprint
+
+from fkg_cs.cve_json_controller import get_technique_risk_scores
 from mitreattack.stix20 import MitreAttackData
 
 def get_technique_info(id):
@@ -25,6 +27,7 @@ def get_technique_info(id):
             output_list["description"] = technique.description
             output_list["platforms"] = technique.x_mitre_platforms
             output_list["creation_date"] = f"{technique.created}"[:10]
+            output_list["risk_scores"] = get_technique_risk_scores(technique.name)
             output_list["detection"] = technique.x_mitre_detection
             if not output_list["detection"] :
                 output_list["detection"]=f"There are no detection methods for {technique.name}"
