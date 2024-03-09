@@ -373,6 +373,8 @@ def get_technique_risk_scores(techniqueKeyWord):
     risk_score['attackComplexity'] = calculate_average_attackComplexity(list_cves_matching_keyword)
     risk_score['baseSeverity'] = calculate_average_baseSeverity(list_cves_matching_keyword)
     risk_score['confidentialityImpact'] = calculate_average_confidentialityImpact(list_cves_matching_keyword)
-
+    risk_score['integrityImpact'] = calculate_average_integrityImpact(list_cves_matching_keyword)
+    risk_score['availabilityImpact'] = calculate_average_availabilityImpact(list_cves_matching_keyword)
+    risk_score['privilegesRequired'] = calculate_average_privilegesRequired(list_cves_matching_keyword)
     return risk_score
 
