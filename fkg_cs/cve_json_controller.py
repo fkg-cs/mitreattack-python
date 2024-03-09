@@ -182,12 +182,132 @@ def calculate_average_attackComplexity(list_matching_cve):
     average_complexity = total_complexity / count
     print(f"----------->media complessità attacco:{average_complexity}")
     # Determina la stringa corrispondente alla media calcolata
-    if average_complexity < 1.1:
+    if average_complexity < 1:
         return 'LOW'
-    elif average_complexity < 2.1:
+    elif average_complexity < 2:
         return 'MEDIUM'
-    elif average_complexity < 3.1:
+    elif average_complexity < 3:
         return 'HIGH'
+
+def calculate_average_confidentialityImpact(list_matching_cve):
+        confidentialityImpact_values = {'LOW': 1, 'MEDIUM': 2, 'HIGH': 3, 'CRITICAL': 4}
+        total_confImpact = 0
+        count = 0
+        for cve in list_matching_cve:
+            confidentialityImpact = cve['metrics']['confidentialityImpact']
+            if confidentialityImpact in confidentialityImpact_values:
+                total_confImpact += confidentialityImpact_values[confidentialityImpact]
+                count += 1
+
+        if count == 0:
+            return 'NONE'  # Se non ci sono valori validi, la media è 'NONE'
+        average_confidentialityImpact = total_confImpact / count
+        print(f"----------->media confidentiality impact :{average_confidentialityImpact}")
+        # Determina la stringa corrispondente alla media calcolata
+        if average_confidentialityImpact < 1:
+            return 'LOW'
+        elif average_confidentialityImpact < 2:
+            return 'MEDIUM'
+        elif average_confidentialityImpact < 3:
+            return 'HIGH'
+        elif average_confidentialityImpact < 3.4:
+            return 'CRITICAL'
+
+def calculate_average_integrityImpact(list_matching_cve):
+    integrityImpact_values = {'LOW': 1, 'MEDIUM': 2, 'HIGH': 3, 'CRITICAL': 4}
+    total_intImpact = 0
+    count = 0
+    for cve in list_matching_cve:
+        integrityImpact = cve['metrics']['integrityImpact']
+        if integrityImpact in integrityImpact_values:
+            total_intImpact += integrityImpact_values[integrityImpact]
+            count += 1
+
+    if count == 0:
+        return 'NONE'  # Se non ci sono valori validi, la media è 'NONE'
+    average_integrityImpact = total_intImpact / count
+    print(f"----------->media integrity impact :{average_integrityImpact}")
+    # Determina la stringa corrispondente alla media calcolata
+    if average_integrityImpact < 1:
+        return 'LOW'
+    elif average_integrityImpact < 2:
+        return 'MEDIUM'
+    elif average_integrityImpact < 3:
+        return 'HIGH'
+    elif average_integrityImpact < 3.4:
+        return 'CRITICAL'
+
+def calculate_average_availabilityImpact(list_matching_cve):
+    availabilityImpact_values = {'LOW': 1, 'MEDIUM': 2, 'HIGH': 3, 'CRITICAL': 4}
+    total_avaImpact = 0
+    count = 0
+    for cve in list_matching_cve:
+        availabilityImpact = cve['metrics']['availabilityImpact']
+        if availabilityImpact in availabilityImpact_values:
+            total_avaImpact += availabilityImpact_values[availabilityImpact]
+            count += 1
+
+    if count == 0:
+        return 'NONE'  # Se non ci sono valori validi, la media è 'NONE'
+    average_availabilityImpact = total_avaImpact / count
+    print(f"----------->media integrity impact :{average_availabilityImpact}")
+    # Determina la stringa corrispondente alla media calcolata
+    if average_availabilityImpact < 1:
+        return 'LOW'
+    elif average_availabilityImpact < 2:
+        return 'MEDIUM'
+    elif average_availabilityImpact < 3:
+        return 'HIGH'
+    elif average_availabilityImpact < 3.4:
+        return 'CRITICAL'
+
+def calculate_average_privilegesRequired(list_matching_cve):
+    privilegesRequired_values = {'LOW': 1, 'MEDIUM': 2, 'HIGH': 3}
+    average_privilegesRequired = 0
+    count = 0
+    for cve in list_matching_cve:
+        privilegesRequired = cve['metrics']['privilegesRequired']
+        if privilegesRequired in privilegesRequired_values:
+            average_privilegesRequired += privilegesRequired_values[privilegesRequired]
+            count += 1
+
+    if count == 0:
+        return 'NONE'  # Se non ci sono valori validi, la media è 'NONE'
+    average_privilegesRequired = average_privilegesRequired / count
+    print(f"----------->media privilegesRequired :{average_privilegesRequired}")
+    # Determina la stringa corrispondente alla media calcolata
+    if average_privilegesRequired < 1:
+        return 'LOW'
+    elif average_privilegesRequired < 2:
+        return 'MEDIUM'
+    elif average_privilegesRequired < 3:
+        return 'HIGH'
+    elif average_privilegesRequired < 3.4:
+        return 'CRITICAL'
+def calculate_average_baseSeverity(list_matching_cve):
+    severity_values = {'NONE': 0, 'LOW': 1, 'MEDIUM': 2, 'HIGH': 3, 'CRITICAL': 4}
+    total_severity = 0
+    count = 0
+    for cve in list_matching_cve:
+        severity = cve['metrics']['baseSeverity']
+        if severity in severity_values:
+            total_severity  += severity_values[severity]
+            count += 1
+
+    if count == 0:
+        return 'NONE'  # Se non ci sono valori validi, la media è 'NONE'
+    average_severity= total_severity / count
+    print(f"----------->media base severity:{average_severity}")
+    # Determina la stringa corrispondente alla media calcolata
+    if average_severity< 1:
+        return 'LOW'
+    elif average_severity < 2:
+        return 'MEDIUM'
+    elif average_severity < 3:
+        return 'HIGH'
+    elif average_severity < 3.4:
+        return 'CRITICAL'
+
 
 def get_risk(techniqueKeyWord):
     n_cves=0
@@ -243,6 +363,11 @@ def get_risk(techniqueKeyWord):
     #print(f"---REPORT: list of matching CVEs:{list_cves_matching_keyword}")#stampa debug
     print(f"---REPORT: media dei basescores: {calculate_average_baseScore(list_cves_matching_keyword)}")
     print(f"---REPORT: media dei attack complexity: {calculate_average_attackComplexity(list_cves_matching_keyword)}")
+    print(f"---REPORT: media delle base severity: {calculate_average_baseSeverity(list_cves_matching_keyword)}")
+    print(f"---REPORT: media delle confidentiality impact: {calculate_average_confidentialityImpact(list_cves_matching_keyword)}")
+    print(f"---REPORT: media delle integrity impact: {calculate_average_integrityImpact(list_cves_matching_keyword)}")
+    print(f"---REPORT: media delle avalabilityty impact: {calculate_average_availabilityImpact(list_cves_matching_keyword)}")
+    print(f"---REPORT: media dei previlegi: {calculate_average_privilegesRequired(list_cves_matching_keyword)}")
 
 if __name__ == "__main__":
     get_risk("cross-site scripting (XSS)")
