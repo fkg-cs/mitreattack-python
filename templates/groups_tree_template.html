@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CTI GROUPS LIST</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+<h1>CTI GROUPS LIST</h1>
+<h2>{{output_list["report"]}}</h2>
+<h1>GROUPS OPERATING IN ENTERPRISE CAMPAIGNS</h1>
+ {% for group in output_list["enterprise_groups"] %}
+  <h2>{{group["name"]}} (ATT&CK ID:{{group["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{group['external_id']}}"> View details</a></h2>
+      <p>{{group["description"]}}</p>
+      <p>{{group["alias_intestation"]}}</p>
+      <p>{{group["aliases"]}}</p>
+ {% endfor %}
+</body>
+</html>

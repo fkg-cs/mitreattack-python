@@ -19,7 +19,7 @@
 
      <p>{{tactic["techniques_intestation"]}}</p>
           {% for technique in tactic["techniques"]%}
-           <h3>Technique: {{technique["name"]}} (ATT&CK ID:  {{technique["external_id"]}}) <a href="http://127.0.0.1:5000/techniques/{{technique["external_id"]}}"> View details</a></h3>
+           <h3>Technique: {{technique["name"]}} (ATT&CK ID:  {{technique["external_id"]}}) <a href="http://127.0.0.1:5000/techniques/{{technique['external_id']}}"> View details</a></h3>
                 <p>      {{technique["description"]}}</p>
                 <p>      {{technique["subtechniques_intestation"]}}</p>
                     {% for subtechnique in technique["subtechniques"]%}
