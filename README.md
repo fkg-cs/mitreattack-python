@@ -19,19 +19,18 @@ The ``MitreAttackData`` library is used to read in and work with MITRE ATT&CK ST
 the ability to query the dataset for objects and their related objects. This is the main content of mitreattack-python;
 you can read more about other modules in this library under "Additional Modules".
 
-## Additional Modules
+## fkg-cs directory 
 
-More detailed information and examples about the specific usage of the additional modules in this package can be found in the individual README files for each module linked below.
+This directory contains all MitreAttackData Library, wich is the base library for the ATT&CK data manipulation in python and the main core of this project:
 
-| module | description | documentation |
-|:------------|:------------|:--------------|
-| [navlayers](https://github.com/mitre-attack/mitreattack-python/tree/master/mitreattack/navlayers) | A collection of utilities for working with [ATT&CK Navigator](https://github.com/mitre-attack/attack-navigator) layers. Provides the ability to import, export, and manipulate layers. Layers can be read in from the filesystem or python dictionaries, combined and edited, and then exported to excel or SVG images. | Further documentation can be found [here](https://github.com/mitre-attack/mitreattack-python/blob/master/mitreattack/navlayers/README.md).|
-| [attackToExcel](https://github.com/mitre-attack/mitreattack-python/tree/master/mitreattack/attackToExcel) | A collection of utilities for converting [ATT&CK STIX data](https://github.com/mitre/cti) to Excel spreadsheets. It also provides access to [Pandas](https://pandas.pydata.org/) DataFrames representing the dataset for use in data analysis. | Further documentation can be found [here](https://github.com/mitre-attack/mitreattack-python/blob/master/mitreattack/attackToExcel/README.md).|
-| [collections](https://github.com/mitre-attack/mitreattack-python/tree/master/mitreattack/collections) | A set of utilities for working with [ATT&CK Collections and Collection Indexes](https://github.com/center-for-threat-informed-defense/attack-workbench-frontend/blob/master/docs/collections.md). Provides functionalities for converting and summarizing data in collections and collection indexes, as well as generating a collection from a raw stix bundle input. | Further documentation can be found [here](https://github.com/mitre-attack/mitreattack-python/blob/master/mitreattack/collections/README.md).|
-| [diffStix](https://github.com/mitre-attack/mitreattack-python/tree/master/mitreattack/diffStix) | Create markdown, HTML, JSON and/or ATT&CK Navigator layers reporting on the changes between two versions of the STIX2 bundles representing the ATT&CK content. Run `diff_stix -h` for full usage instructions. | Further documentation can be found [here](https://github.com/mitre-attack/mitreattack-python/blob/master/mitreattack/diffStix/README.md).|
+### CLI_py_utils
+This directory contains many python file function with CLI that helps to replicare ATT&CK navigator with python objects.
+It is very helpful for future development in MitreAttackData Library and serve as a guideline for programmers that need to integrate python data manituplation of MITRE MATRIXES.
+
+### json directory
+This directory contains all the json files that the project needs, such as: json_matrix that contins ATT&CK matixes information and json_CVE that contains a year by year archive divided by its identification number.
 
 
-## Related MITRE Work
 
 ### CTI
 
@@ -60,17 +59,8 @@ STIX is designed to improve many capabilities, such as collaborative threat anal
 
 <https://oasis-open.github.io/cti-documentation/>
 
-### ATT&CK scripts
-
-One-off scripts and code examples you can use as inspiration for how to work with ATT&CK programmatically. Many of the functionalities found in the mitreattack-python package were originally posted on attack-scripts.
-
-<https://github.com/mitre-attack/attack-scripts>
 
 
-## Contributing
-
-To contribute to this project, either through a bug report, feature request, or merge request,
-please see the [Contributors Guide](https://github.com/mitre-attack/mitreattack-python/blob/master/docs/CONTRIBUTING.md).
 
 ## Notice
 
