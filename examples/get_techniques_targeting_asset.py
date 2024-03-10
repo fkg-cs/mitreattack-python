@@ -2,7 +2,7 @@ from mitreattack.stix20 import MitreAttackData
 
 
 def main():
-    mitre_attack_data = MitreAttackData("../fkg_cs/json_matrix/ics-attack.json")
+    mitre_attack_data = MitreAttackData("../fkg_cs/json/json_matrix/ics-attack.json")
 
     # get techniques targeting A0004
     asset_stix_id = "x-mitre-asset--1769c499-55e5-462f-bab2-c39b8cd5ae32"
