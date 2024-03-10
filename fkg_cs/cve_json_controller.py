@@ -166,7 +166,7 @@ def calculate_average_baseScore(list_matching_cve):
     for cve in list_matching_cve:
         sum_baseScores += cve['metrics']['baseScore']
     avg_base_score = sum_baseScores / len(list_matching_cve)
-    return round(avg_base_score, 1)#restituisco basescore arrotondato alla prima cifra decimale
+    return round(avg_base_score, 2)#restituisco basescore arrotondato alla prima cifra decimale
 def calculate_average_attackComplexity(list_matching_cve):
     complexity_values = {'LOW': 1, 'MEDIUM': 2, 'HIGH': 3}
     total_complexity = 0
@@ -182,11 +182,11 @@ def calculate_average_attackComplexity(list_matching_cve):
     average_complexity = total_complexity / count
     print(f"----------->media complessità attacco:{average_complexity}")
     # Determina la stringa corrispondente alla media calcolata
-    if average_complexity < 1:
+    if average_complexity < 1.4:
         return 'LOW'
     elif average_complexity < 2:
         return 'MEDIUM'
-    elif average_complexity < 3:
+    elif average_complexity < 2.9:
         return 'HIGH'
 
 def calculate_average_confidentialityImpact(list_matching_cve):
@@ -210,7 +210,7 @@ def calculate_average_confidentialityImpact(list_matching_cve):
             return 'MEDIUM'
         elif average_confidentialityImpact < 3:
             return 'HIGH'
-        elif average_confidentialityImpact < 3.4:
+        elif average_confidentialityImpact < 3.2:
             return 'CRITICAL'
 
 def calculate_average_integrityImpact(list_matching_cve):
@@ -234,7 +234,7 @@ def calculate_average_integrityImpact(list_matching_cve):
         return 'MEDIUM'
     elif average_integrityImpact < 3:
         return 'HIGH'
-    elif average_integrityImpact < 3.4:
+    elif average_integrityImpact < 3.2:
         return 'CRITICAL'
 
 def calculate_average_availabilityImpact(list_matching_cve):
@@ -258,7 +258,7 @@ def calculate_average_availabilityImpact(list_matching_cve):
         return 'MEDIUM'
     elif average_availabilityImpact < 3:
         return 'HIGH'
-    elif average_availabilityImpact < 3.4:
+    elif average_availabilityImpact < 3.2:
         return 'CRITICAL'
 
 def calculate_average_privilegesRequired(list_matching_cve):
@@ -276,14 +276,14 @@ def calculate_average_privilegesRequired(list_matching_cve):
     average_privilegesRequired = average_privilegesRequired / count
     print(f"----------->media privilegesRequired :{average_privilegesRequired}")
     # Determina la stringa corrispondente alla media calcolata
-    if average_privilegesRequired < 1:
+    if average_privilegesRequired < 1.1:
         return 'LOW'
-    elif average_privilegesRequired < 2:
+    elif average_privilegesRequired < 2.2:
         return 'MEDIUM'
     elif average_privilegesRequired < 3:
         return 'HIGH'
-    elif average_privilegesRequired < 3.4:
-        return 'CRITICAL'
+    elif average_privilegesRequired < 3.5:
+        return 'ADMIN LIKE'
 def calculate_average_baseSeverity(list_matching_cve):
     severity_values = {'NONE': 0, 'LOW': 1, 'MEDIUM': 2, 'HIGH': 3, 'CRITICAL': 4}
     total_severity = 0
@@ -301,9 +301,9 @@ def calculate_average_baseSeverity(list_matching_cve):
     # Determina la stringa corrispondente alla media calcolata
     if average_severity< 1:
         return 'LOW'
-    elif average_severity < 2:
+    elif average_severity < 2.2:
         return 'MEDIUM'
-    elif average_severity < 3:
+    elif average_severity < 2.9:
         return 'HIGH'
     elif average_severity < 3.4:
         return 'CRITICAL'
@@ -364,17 +364,17 @@ def get_technique_risk_scores(techniqueKeyWord):
     #print(f"---REPORT: list of matching CVEs:{list_cves_matching_keyword}")#stampa debug
     print(f"---REPORT: media dei basescores: {calculate_average_baseScore(list_cves_matching_keyword)}")
     print(f"---REPORT: media dei attack complexity: {calculate_average_attackComplexity(list_cves_matching_keyword)}")
-    print(f"---REPORT: media delle base severity: {calculate_average_baseSeverity(list_cves_matching_keyword)}")
     print(f"---REPORT: media delle confidentiality impact: {calculate_average_confidentialityImpact(list_cves_matching_keyword)}")
     print(f"---REPORT: media delle integrity impact: {calculate_average_integrityImpact(list_cves_matching_keyword)}")
     print(f"---REPORT: media delle avalabilityty impact: {calculate_average_availabilityImpact(list_cves_matching_keyword)}")
     print(f"---REPORT: media dei previlegi: {calculate_average_privilegesRequired(list_cves_matching_keyword)}")
     risk_score['baseScore']=calculate_average_baseScore(list_cves_matching_keyword)
     risk_score['attackComplexity'] = calculate_average_attackComplexity(list_cves_matching_keyword)
-    risk_score['baseSeverity'] = calculate_average_baseSeverity(list_cves_matching_keyword)
     risk_score['confidentialityImpact'] = calculate_average_confidentialityImpact(list_cves_matching_keyword)
     risk_score['integrityImpact'] = calculate_average_integrityImpact(list_cves_matching_keyword)
     risk_score['availabilityImpact'] = calculate_average_availabilityImpact(list_cves_matching_keyword)
     risk_score['privilegesRequired'] = calculate_average_privilegesRequired(list_cves_matching_keyword)
     return risk_score
 
+if __name__ == "__main__":
+    get_technique_risk_scores("Adversaries may obtain and abuse credentials of existing accounts as a means of gaining Initial Access, Persistence, Privilege Escalation, or Defense Evasion. Compromised credentials may be used to bypass access controls placed on various resources on systems within the network and may even be used for persistent access to remote systems and externally available services, such as VPNs, Outlook Web Access, network devices, and remote desktop.(Citation: volexity_0day_sophos_FW) Compromised credentials may also grant an adversary increased privilege to specific systems or access to restricted areas of the network. Adversaries may choose not to use malware or tools in conjunction with the legitimate access those credentials provide to make it harder to detect their presence. In some cases, adversaries may abuse inactive accounts: for example, those belonging to individuals who are no longer part of an organization. Using these accounts may allow the adversary to evade detection, as the original account user will not be present to identify any anomalous activity taking place on their account.(Citation: CISA MFA PrintNightmare) The overlap of permissions for local, domain, and cloud accounts across a network of systems is of concern because the adversary may be able to pivot across accounts and systems to reach a high level of access (i.e., domain or enterprise administrator) to bypass access controls set within the enterprise.(Citation: TechNet Credential Theft)")

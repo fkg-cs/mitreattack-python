@@ -26,23 +26,40 @@ def get_technique_info(id):
             output_list["external_id"] = technique_external_id
             output_list["description"] = technique.description
             output_list["platforms"] = technique.x_mitre_platforms
-            output_list["creation_date"] = f"{technique.created}"[:10]
-            output_list["risk_scores"] = get_technique_risk_scores(technique.name)
-            output_list["detection"] = technique.x_mitre_detection
-            if not output_list["detection"] :
-                output_list["detection"]=f"There are no detection methods for {technique.name}"
+            output_list["creation_date"] = f"{technique.created}"[:10]#ottengo solo mese-giorno-anno e taglio timestamp
+            output_list["risk_scores"] = get_technique_risk_scores(technique.name+technique.description)
+            if hasattr(technique, 'x_mitre_detection'):
+                output_list["detection"] = technique.x_mitre_detection
+            else:
+                output_list["detection"] = f"There are no detection methods known for {technique.name}"
+
             output_list["subtechniques"] = []
-            subs = (mitre_attack_enterprise_data.get_subtechniques_of_technique(technique.id) +
-                    mitre_attack_ics_data.get_subtechniques_of_technique(technique.id) +
-                    mitre_attack_mobile_data.get_subtechniques_of_technique(technique.id))
+            subs=[]
+            #devo conntrollare il dominio e prendere le sottotecniche solo del dominio o sanificare qualcosa
+            if technique.x_mitre_domains == 'enterprise-attack':
+                subs = mitre_attack_enterprise_data.get_subtechniques_of_technique(technique.id)
+            if technique.x_mitre_domains == 'ics-attack':
+                subs = mitre_attack_ics_data.get_subtechniques_of_technique(technique.id)
+            if technique.x_mitre_domains == 'moblile-attack':
+                subs = mitre_attack_mobile_data.get_subtechniques_of_technique(technique.id)
+
             if len(subs) >= 1:
                 output_list["subtechniques_intestation"] = f"There are {len(subs)} subtechniques related to {technique.name} techinique:"
-                n_subtechniques = n_subtechniques + len(subs)
+
                 for s in subs:
                     my_subtechnique = dict()
                     sub = s["object"]  # casto in oggetto
                     my_subtechnique["name"] = sub.name
-                    my_subtechnique["external_id"] = mitre_attack_enterprise_data.get_attack_id(sub.id)
+                    #controllo in che dominio devo cercare l'external id
+                    if technique.x_mitre_domains == 'enterprise-attack':
+                     my_subtechnique["external_id"] = mitre_attack_enterprise_data.get_attack_id(sub.id)
+
+                    if technique.x_mitre_domains == 'moblile-attack':
+                     my_subtechnique["external_id"] = mitre_attack_ics_data.get_attack_id(sub.id)
+
+                    if technique.x_mitre_domains == 'ics-attack':
+                     my_subtechnique["external_id"] = mitre_attack_mobile_data.get_attack_id(sub.id)
+
                     my_subtechnique["description"] = sub.description
 
                     output_list["subtechniques"].append(my_subtechnique)
@@ -91,4 +108,4 @@ def get_technique_info(id):
     return output_list
 
 if __name__ == "__main__":
-    get_technique_info("T1190")
+    get_technique_info("T1418")
