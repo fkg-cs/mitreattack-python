@@ -83,8 +83,7 @@
 <h2>Enterprise techniques used by {{output_list["name"]}}</h2>
    <p2>{{output_list["enterprise_techniques_intestation"]}}</p2>
    {% for technique in output_list["enterprise_techniques"]%}
-        <h3>{{technique["name"]}} (ATT&CK ID: {{technique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{technique['external_id']}}"> View details</a></h3>
-             <p3>{{technique["description"]}}</p3>
+        <h4>{{technique["name"]}} (ATT&CK ID: {{technique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{technique['external_id']}}"> View details</a></h4>
         {% endfor %}
 <h2>ICS techniques used by {{output_list["name"]}}</h2>
    <p2>{{output_list["ics_techniques_intestation"]}}</p2>
@@ -116,6 +115,25 @@
    {% for software in output_list["mobile_software"]%}
         <h3>{{software["name"]}} (ATT&CK ID: {{software["external_id"]}})</h3>
              <p3>{{software["description"]}}</p3>
+        {% endfor %}
+
+<h2>Assets targeted in Enterprise context by {{output_list["name"]}}</h2>
+   <p2>{{output_list["enterprise_assets_intestation"]}}</p2>
+   {% for asset in output_list["enterprise_assets"]%}
+        <h3>{{asset["name"]}} (ATT&CK ID: {{asset["external_id"]}})</h3>
+             <p3>{{asset["description"]}}</p3>
+        {% endfor %}
+<h2>Assets targeted in ICS context by {{output_list["name"]}}</h2>
+   <p2>{{output_list["ics_assets_intestation"]}}</p2>
+   {% for asset in output_list["ics_assets"]%}
+        <h3>{{asset["name"]}} (ATT&CK ID: {{asset["external_id"]}})</h3>
+             <p3>{{asset["description"]}}</p3>
+        {% endfor %}
+<h2>Assets targeted in mobile context by {{output_list["name"]}}</h2>
+   <p2>{{output_list["mobile_assets_intestation"]}}</p2>
+   {% for asset in output_list["mobile_assets"]%}
+        <h3>{{asset["name"]}} (ATT&CK ID: {{asset["external_id"]}})</h3>
+             <p3>{{asset["description"]}}</p3>
         {% endfor %}
 </body>
 </html>

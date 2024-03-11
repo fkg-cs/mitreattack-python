@@ -82,6 +82,7 @@ def get_group_info(external_id):
     output_list["enterprise_techniques"] = []
     for technique in techniques_used_by_group:
         my_technique = dict()
+        my_technique["stix_id"] = technique['object']['id']
         my_technique["external_id"] = technique['object']['external_references'][0]['external_id']
         my_technique["name"] = technique['object']['name']
         my_technique["description"] = technique['object']['description']
@@ -97,6 +98,7 @@ def get_group_info(external_id):
     output_list["ics_techniques"]=[]
     for technique in techniques_used_by_group:
         my_technique = dict()
+        my_technique["stix_id"] = technique['object']['id']
         my_technique["external_id"]= technique['object']['external_references'][0]['external_id']
         my_technique["name"] = technique['object']['name']
         my_technique["description"] = technique['object']['description']
@@ -112,6 +114,7 @@ def get_group_info(external_id):
     output_list["mobile_techniques"] = []
     for technique in techniques_used_by_group:
         my_technique = dict()
+        my_technique["stix_id"] = technique['object']['id']
         my_technique["external_id"] = technique['object']['external_references'][0]['external_id']
         my_technique["name"] = technique['object']['name']
         my_technique["description"] = technique['object']['description']
@@ -163,8 +166,72 @@ def get_group_info(external_id):
         my_software["description"] = software['object']['description']
         output_list["mobile_software"].append(my_software)
 
+#gestione assets targhettizati da tecniche enterprise
+    output_list["enterprise_assets"] = []
+    if len(output_list["enterprise_techniques"]) > 0:
+        for technique in output_list["enterprise_techniques"]:
+            assets_targeted = mitre_attack_enterprise_data.get_assets_targeted_by_technique(technique["stix_id"])
+            print(f"lunghezza asset targhettizzati da tecniche enterprise: {len(assets_targeted)}")
+            if len(assets_targeted) > 0:
+                output_list[
+                    "enterprise_assets_intestation"] = f"There are {len(assets_targeted)} asset targeted by {output_list['name']} group in enterprise context:"
+            else:
+                output_list[
+                    "enterprise_assets_intestation"] = f"There are no asset targeted by {output_list['name']} group in enterprise context."
+            for asset in assets_targeted:
+                my_asset = dict()
+                my_asset["external_id"] = asset['object']['external_references'][0]['external_id']
+                my_asset["name"] = asset['object']['name']
+                my_asset["description"] = asset['object']['description']
+                output_list["enterprise_assets"].append(my_asset)
+    else:
+        output_list["enterprise_assets_intestation"] = f"There are no asset targeted by {output_list['name']} group in enterprise context."
 
-    pprint.pprint(output_list)
+    #gestione assets targhettizati da tecniche ics
+    output_list["ics_assets"] = []
+    if len(output_list["ics_techniques"]) > 0:
+        for technique in output_list["ics_techniques"]:
+            assets_targeted = mitre_attack_ics_data.get_assets_targeted_by_technique(technique["stix_id"])
+            print(f"lunghezza asset targhettizzati da tecniche ics: {len(assets_targeted)}")
+            if len(assets_targeted) > 0:
+                output_list[
+                    "ics_assets_intestation"] = f"There are {len(assets_targeted)} asset targeted by {output_list['name']} group in ICS context:"
+            else:
+                output_list[
+                    "ics_assets_intestation"] = f"There are no asset targeted by {output_list['name']} group in ICS context."
+            for asset in assets_targeted:
+                my_asset = dict()
+                my_asset["external_id"] = asset['object']['external_references'][0]['external_id']
+                my_asset["name"] = asset['object']['name']
+                my_asset["description"] = asset['object']['description']
+                output_list["ics_assets"].append(my_asset)
+    else:
+        output_list["ics_assets_intestation"] = f"There are no asset targeted by {output_list['name']} group in ICS context."
+
+    #gestione assets targhettizati da tecniche mobile
+    output_list["mobile_assets"] = []
+    if len(output_list["ics_techniques"]) > 0:
+        for technique in output_list["mobile_techniques"]:
+            assets_targeted = mitre_attack_mobile_data.get_assets_targeted_by_technique(technique["stix_id"])
+            print(f"lunghezza asset targhettizzati da tecniche mobile{len(assets_targeted)}")
+            if len(assets_targeted) > 0:
+                output_list[
+                    "mobile_assets_intestation"] = f"There are {len(assets_targeted)} asset targeted by {output_list['name']} group in mobile context:"
+            else:
+                output_list[
+                    "mobile_assets_intestation"] = f"There are no asset targeted by {output_list['name']} group in mobile context."
+            for asset in assets_targeted:
+                my_asset = dict()
+                my_asset["external_id"] = asset['object']['external_references'][0]['external_id']
+                my_asset["name"] = asset['object']['name']
+                my_asset["description"] = asset['object']['description']
+                output_list["mobile_assets"].append(my_asset)
+    else:
+        output_list["mobile_assets_intestation"] = f"There are no asset targeted by {output_list['name']} group in mobile context."
+
+    print(output_list["enterprise_assets"])
+    print(output_list["ics_assets"])
+    print(output_list["mobile_assets"])
     return output_list
 
 if __name__ == "__main__":
