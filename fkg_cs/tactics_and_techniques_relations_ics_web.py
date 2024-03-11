@@ -9,7 +9,7 @@ def get_ics_matrix():
     output_list = dict()
 
     mitre_attack_data = MitreAttackData(
-        r"C:\Users\franc\Desktop\mitrepy\mitreattack-python\fkg_cs\json_matrix\ics-attack.json")
+        r"C:\Users\franc\Desktop\mitrepy\mitreattack-python\fkg_cs\json\json_matrix\ics-attack.json")
     tactics = mitre_attack_data.get_tactics(remove_revoked_deprecated=True)
     tactics.sort(key=lambda x: x["external_references"][0].get("external_id"), reverse=False)
 

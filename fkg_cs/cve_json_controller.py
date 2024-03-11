@@ -163,9 +163,12 @@ def sanitize_keyWords(keyWords):
 
 def calculate_average_baseScore(list_matching_cve):
     sum_baseScores=0
+    avg_base_score=0
     for cve in list_matching_cve:
         sum_baseScores += cve['metrics']['baseScore']
-    avg_base_score = sum_baseScores / len(list_matching_cve)
+    if len(list_matching_cve) != 0:
+      avg_base_score = sum_baseScores / len(list_matching_cve)
+
     return round(avg_base_score, 2)#restituisco basescore arrotondato alla prima cifra decimale
 def calculate_average_attackComplexity(list_matching_cve):
     complexity_values = {'LOW': 1, 'MEDIUM': 2, 'HIGH': 3}
@@ -316,7 +319,7 @@ def get_technique_risk_scores(techniqueKeyWord):
     techniqueKeyWord = sanitize_keyWords(techniqueKeyWord)  # elaboro le keyword e tolgo eventuali caratteri problematici
 
     print(f"--> RETRIVING INFORMATION OF All CVEs FROM dir  <--\n")
-    list_all_cves_datas= get_list_of_CVEs_from_dir(r"C:\Users\franc\Desktop\mitrepy\mitreattack-python\fkg_cs\json_CVE")#ottengo lista con i dati di TUTTI i cve presenti nella cartella json
+    list_all_cves_datas= get_list_of_CVEs_from_dir(r"C:\Users\franc\Desktop\mitrepy\mitreattack-python\fkg_cs\json\json_CVE")#ottengo lista con i dati di TUTTI i cve presenti nella cartella json
     list_cves_matching_keyword = []  # lista delle cve con relative metriche che hanno corrispondenza con parole chiave
 
 

@@ -12,7 +12,7 @@
 <h2>{{output_list["report"]}}</h2>
 <h1>GROUPS OPERATING IN ENTERPRISE CAMPAIGNS</h1>
  {% for group in output_list["enterprise_groups"] %}
-  <h2>{{group["name"]}} (ATT&CK ID:{{group["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{group['external_id']}}"> View details</a></h2>
+  <h2>{{group["name"]}} (ATT&CK ID:{{group["external_id"]}})<a href="http://127.0.0.1:5000/CTI_groups/{{group['external_id']}}"> View details</a></h2>
       <p>{{group["description"]}}</p>
       <p>{{group["alias_intestation"]}}</p>
       <p>{{group["aliases"]}}</p>

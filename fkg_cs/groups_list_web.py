@@ -6,7 +6,7 @@ def get_groups_list():
     n_enterprise_groups=0
     n_ics_groups=0
     n_mobile_groups=0
-    mitre_attack_data = MitreAttackData(r"C:\Users\franc\Desktop\mitrepy\mitreattack-python\fkg_cs\json_matrix\enterprise-attack.json")
+    mitre_attack_data = MitreAttackData(r"C:\Users\franc\Desktop\mitrepy\mitreattack-python\fkg_cs\json\json_matrix\enterprise-attack.json")
     groups = mitre_attack_data.get_groups(remove_revoked_deprecated=True)
     n_enterprise_groups=len(groups)
 
@@ -25,7 +25,7 @@ def get_groups_list():
     output_list["enterprise_groups"]=enterprise_groups
 
 #popolo gruppi ics
-    mitre_attack_data = MitreAttackData(r"C:\Users\franc\Desktop\mitrepy\mitreattack-python\fkg_cs\json_matrix\ics-attack.json")
+    mitre_attack_data = MitreAttackData(r"C:\Users\franc\Desktop\mitrepy\mitreattack-python\fkg_cs\json\json_matrix\ics-attack.json")
     groups = mitre_attack_data.get_groups(remove_revoked_deprecated=True)
     n_ics_groups = len(groups)
     output_list["ics_groups"] = []
@@ -41,7 +41,7 @@ def get_groups_list():
     output_list["ics_groups"]=ics_groups
 
 #popolo gruppi mobile
-    mitre_attack_data = MitreAttackData(r"C:\Users\franc\Desktop\mitrepy\mitreattack-python\fkg_cs\json_matrix\mobile-attack.json")
+    mitre_attack_data = MitreAttackData(r"C:\Users\franc\Desktop\mitrepy\mitreattack-python\fkg_cs\json\json_matrix\mobile-attack.json")
     groups = mitre_attack_data.get_groups(remove_revoked_deprecated=True)
     n_mobile_groups=len(groups)
     output_list["mobile_groups"] = []

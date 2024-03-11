@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Technique {{output_list["external_id"]}} Details </title>
+    <title>Group {{output_list["external_id"]}} Details</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -15,35 +15,33 @@
 
    <h1>{{output_list["name"]}} (ATT&CK ID: {{output_list["external_id"]}})</h1>
      <p1>{{output_list["description"]}}</p1> <br><br>
-     <p2>PLATFORMS: {{output_list["platforms"]}}</p2><br>
-     <p2>CREATED: {{output_list["creation_date"]}}</p2><br><br>
- <h1>RISK SCORING IN CVSS 3.1:</h1>
-     <p1>[{{output_list["risk_scores"]}}]</p1>
+     <p1>{{output_list["alias_intestation"]}}</p1>
+     <p1>{{output_list["aliases"]}}</p1>
 
-     <p1>{{output_list["subtechniques_intestation"]}}</p1>
-        {% for subtechnique in output_list["subtechniques"]%}
-        <h3>{{subtechnique["name"]}} (ATT&CK ID: {{subtechnique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{subtechnique['external_id']}}"> View details</a></h3>
-             <p3>{{subtechnique["description"]}}</p3>
-        {% endfor %}
-   <hr>
-   <h2>Detection of technique</h2>
-   <p2>{{output_list["detection"]}}</p2>
-   <hr>
-   <h2>Mitigation of technique</h2>
-   <p2>{{output_list["mitigations_intestation"]}}</p2>
-   {% for mitigation in output_list["mitigations"]%}
-        <h3>{{mitigation["name"]}} (ATT&CK ID: {{mitigation["external_id"]}})</h3>
-             <p3>{{mitigation["description"]}}</p3>
-        {% endfor %}
-   <hr>
-   <h2>Use in different campaigns</h2>
-   <p2>{{output_list["campaign_intestation"]}}</p2>
-   {% for campaign in output_list["campaigns"]%}
+   <h2>Enterprise Campaigns attribuited to {{output_list["name"]}}</h2>
+   <p2>{{output_list["enterprise_campaigns_intestation"]}}</p2>
+   {% for campaign in output_list["enterprise_campaigns"]%}
         <h3>{{campaign["name"]}} (ATT&CK ID: {{campaign["external_id"]}})</h3>
              <p3>{{campaign["description"]}}</p3>
         {% endfor %}
+
+ <h2>ICS Campaigns attribuited to {{output_list["name"]}}</h2>
+   <p2>{{output_list["ics_campaigns_intestation"]}}</p2>
+   {% for campaign in output_list["ics_campaigns"]%}
+        <h3>{{campaign["name"]}} (ATT&CK ID: {{campaign["external_id"]}})</h3>
+             <p3>{{campaign["description"]}}</p3>
+        {% endfor %}
+
+ <h2>Mobile Campaigns attribuited to {{output_list["name"]}}</h2>
+   <p2>{{output_list["mobile_campaigns_intestation"]}}</p2>
+   {% for campaign in output_list["mobile_campaigns"]%}
+        <h3>{{campaign["name"]}} (ATT&CK ID: {{campaign["external_id"]}})</h3>
+             <p3>{{campaign["description"]}}</p3>
+        {% endfor %}
+
  {% set somma = output_list["n_enterprise_campaigns"]+output_list["n_ics_campaigns"]+output_list["n_mobile_campaigns"] %}
  {% if  somma >= 1 %}
+     <h2>Report campaigns performed by {{output_list["name"]}}</h2>
      <canvas id="myPieChart" width="400" height="400"></canvas>
      <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -53,7 +51,7 @@
             data: {
                 labels: ['ENTERPRISE campaigns', 'ICS campaigns', 'MOBILE campaigns'],
                 datasets: [{
-                    label: 'using {{output_list["name"]}}',
+                    label: 'by {{output_list["name"]}}',
                     data: ['{{output_list["n_enterprise_campaigns"]}}', '{{output_list["n_ics_campaigns"]}}', '{{output_list["n_mobile_campaigns"]}}'],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.5)',

@@ -9,7 +9,7 @@ def get_mobile_matrix():
     output_list = dict()
 
     mitre_attack_data = MitreAttackData(
-        r"C:\Users\franc\Desktop\mitrepy\mitreattack-python\fkg_cs\json_matrix\mobile-attack.json")
+        r"C:\Users\franc\Desktop\mitrepy\mitreattack-python\fkg_cs\json\json_matrix\mobile-attack.json")
     tactics = mitre_attack_data.get_tactics(remove_revoked_deprecated=True)
     tactics.sort(key=lambda x: x["external_references"][0].get("external_id"), reverse=False)
 
