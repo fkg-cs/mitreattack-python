@@ -3,11 +3,11 @@ from mitreattack.stix20 import MitreAttackData
 def get_group_info(external_id):
     output_list = dict()
     mitre_attack_enterprise_data = MitreAttackData(
-        r"../Janus/json/json_matrix/enterprise-attack.json")
+        r"../json/json_matrix/enterprise-attack.json")
     mitre_attack_ics_data = MitreAttackData(
-        r"../Janus/json/json_matrix/ics-attack.json")
+        r"../json/json_matrix/ics-attack.json")
     mitre_attack_mobile_data = MitreAttackData(
-        r"../Janus/json/json_matrix/mobile-attack.json")
+        r"../json/json_matrix/mobile-attack.json")
     output_list["external_id"] = external_id
     group=mitre_attack_enterprise_data.get_object_by_attack_id(external_id, "intrusion-set")
     group_stix_id=group.id
@@ -38,7 +38,7 @@ def get_group_info(external_id):
     group_ics_campaigns = mitre_attack_ics_data.get_campaigns_attributed_to_group(group_stix_id)
     output_list["n_ics_campaigns"] = len(group_ics_campaigns)
     if len(group_enterprise_campaigns) > 0:
-            output_list["ics_campaigns_intestation"] = f"There are {len(group_enterprise_campaigns)} ICS campaigns attributed to {output_list['name']} group:"
+            output_list["ics_campaigns_intestation"] = f"There are {len(group_ics_campaigns)} ICS campaigns attributed to {output_list['name']} group:"
     else:
             output_list["ics_campaigns_intestation"] = f"There are no ICS campaigns attributed to {output_list['name']} group."
 
@@ -168,7 +168,7 @@ def get_group_info(external_id):
     if len(output_list["enterprise_techniques"]) > 0:
         for technique in output_list["enterprise_techniques"]:
             assets_targeted = mitre_attack_enterprise_data.get_assets_targeted_by_technique(technique["stix_id"])
-            print(f"lunghezza asset targhettizzati da tecniche enterprise: {len(assets_targeted)}")
+
             if len(assets_targeted) > 0:
                 output_list[
                     "enterprise_assets_intestation"] = f"There are {len(assets_targeted)} asset targeted by {output_list['name']} group in enterprise context:"
@@ -189,7 +189,7 @@ def get_group_info(external_id):
     if len(output_list["ics_techniques"]) > 0:
         for technique in output_list["ics_techniques"]:
             assets_targeted = mitre_attack_ics_data.get_assets_targeted_by_technique(technique["stix_id"])
-            print(f"lunghezza asset targhettizzati da tecniche ics: {len(assets_targeted)}")
+
             if len(assets_targeted) > 0:
                 output_list[
                     "ics_assets_intestation"] = f"There are {len(assets_targeted)} asset targeted by {output_list['name']} group in ICS context:"
@@ -210,7 +210,7 @@ def get_group_info(external_id):
     if len(output_list["ics_techniques"]) > 0:
         for technique in output_list["mobile_techniques"]:
             assets_targeted = mitre_attack_mobile_data.get_assets_targeted_by_technique(technique["stix_id"])
-            print(f"lunghezza asset targhettizzati da tecniche mobile{len(assets_targeted)}")
+
             if len(assets_targeted) > 0:
                 output_list[
                     "mobile_assets_intestation"] = f"There are {len(assets_targeted)} asset targeted by {output_list['name']} group in mobile context:"
@@ -226,10 +226,10 @@ def get_group_info(external_id):
     else:
         output_list["mobile_assets_intestation"] = f"There are no asset targeted by {output_list['name']} group in mobile context."
 
-    print(output_list["enterprise_assets"])
-    print(output_list["ics_assets"])
-    print(output_list["mobile_assets"])
+    print(output_list["enterprise_campaigns"])
+    print(output_list["ics_campaigns"])
+    print(output_list["mobile_campaigns"])
     return output_list
 
 if __name__ == "__main__":
-    get_group_info("G1006")
+    get_group_info("G1015")
