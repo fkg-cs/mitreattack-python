@@ -3,11 +3,11 @@ from mitreattack.stix20 import MitreAttackData
 def get_group_info(external_id):
     output_list = dict()
     mitre_attack_enterprise_data = MitreAttackData(
-        r"../json/json_matrix/enterprise-attack.json")
+        r"../Janus/json/json_matrix/enterprise-attack.json")
     mitre_attack_ics_data = MitreAttackData(
-        r"../json/json_matrix/ics-attack.json")
+        r"../Janus/json/json_matrix/ics-attack.json")
     mitre_attack_mobile_data = MitreAttackData(
-        r"../json/json_matrix/mobile-attack.json")
+        r"../Janus/json/json_matrix/mobile-attack.json")
     output_list["external_id"] = external_id
     group=mitre_attack_enterprise_data.get_object_by_attack_id(external_id, "intrusion-set")
     group_stix_id=group.id
@@ -37,7 +37,7 @@ def get_group_info(external_id):
     # gestione campagne ics
     group_ics_campaigns = mitre_attack_ics_data.get_campaigns_attributed_to_group(group_stix_id)
     output_list["n_ics_campaigns"] = len(group_ics_campaigns)
-    if len(group_enterprise_campaigns) > 0:
+    if len(group_ics_campaigns) > 0:
             output_list["ics_campaigns_intestation"] = f"There are {len(group_ics_campaigns)} ICS campaigns attributed to {output_list['name']} group:"
     else:
             output_list["ics_campaigns_intestation"] = f"There are no ICS campaigns attributed to {output_list['name']} group."
