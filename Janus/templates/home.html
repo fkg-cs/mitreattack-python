@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<ul>
+    <li><a href="#home">Home</a></li>
+    <li class="dropdown">
+      <a href="javascript:void(0)" class="dropbtn">Switch Matrix</a>
+      <div class="dropdown-content">
+        <a href="#">Option 1</a>
+        <a href="#">Option 2</a>
+        <a href="#">Option 3</a>
+      </div>
+    </li>
+    <li><a href="#contact">CTI Groups</a></li>
+  </ul>
+  <div class="search-container">
+    <input type="text" placeholder="Search...">
+    <button type="submit">Cerca</button>
+  </div>
+</div>
+<bodyhome>
+    <div class="container">
+        <div class="header">
+            <h1>JANUS</h1>
+        </div>
+
+        <div class="cards">
+            <!-- Prima card con link -->
+            <a href="http://127.0.0.1:5000/CTI_groups" class="card">
+                <img src="cti_groups_image.jpg" alt="CTI Groups">
+                <h2>CTI Groups</h2>
+                <p>Discover more about CTI groups</p>
+            </a>
+
+            <!-- Seconda card con link -->
+            <a href="http://127.0.0.1:5000/matrix_selector" class="card">
+                <img src="attack_matrix_image.jpg" alt="Att&ck Matrix">
+                <h2>Att&ck Matrix</h2>
+                <p>Explore the Att&ck Matrix</p>
+            </a>
+        </div>
+    </div>
+</bodyhome>
+</html>
+
