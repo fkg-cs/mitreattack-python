@@ -329,39 +329,43 @@ def get_technique_risk_scores(techniqueKeyWord):
         if cve_data.has_metrics():#solo se ha le metriche che mi servono controllo la descrizione
            cve_data_description = cve_data.get_description()
 
-           for word in techniqueKeyWord.split():
-               # controllo se la descrizione della cve ha le parole chiave della tecnica
+           for word in techniqueKeyWord.split():# controllo se la descrizione della tecnica sudivisa in parole chiave ha corrispondenza con la descrizione della cve
                if len(word) >= 4 and ( word in cve_data_description or word.lower() in cve_data_description or word.upper() in cve_data_description) or ( techniqueKeyWord.lower() in cve_data_description or techniqueKeyWord.upper() in cve_data_description ):
-                   cve_matching_keyword=dict()#dizionario contenente informazioni su singolo cve con corrispondenze su parole chiave
-                   #stampe a video per CL
-                   print(f"--> CVE ID with metrics and keywords ('{techniqueKeyWord}')->('{word}')  in description: {cve_data.get_cveId()} ")
-                   print(f"--> CVE description: {cve_data.get_description()}")
-                   print(f"--> CVE METRICS: ")
-                   print(f"                BASE SCORE: [{cve_data.get_cvss_baseScore()}] ")
-                   print(f"                ATTACK COMPLEXITY: {cve_data.get_cvss_attackComplexity()} ")
-                   print(f"                ATTACK BASE SEVERITY: {cve_data.get_cvss_baseSeverity()} ")
-                   print(f"                ATTACK CONFIDENTIALITY IMPACT: {cve_data.get_cvss_confidentialityImpact()} ")
-                   print(f"                ATTACK INTEGRITY IMPACT: {cve_data.get_cvss_integrityImpact()} ")
-                   print(f"                ATTACK AVAILABILITY IMPACT: {cve_data.get_cvss_availabilityImpact()} ")
-                   print(f"                PRIVILEGES REQUIRED: {cve_data.get_cvss_privilegesRequired()} ")
-                   print("-------------------------------------------------------------------------------")
+                   if not is_cve_id_present(cve_data.get_cveId(), list_cves_matching_keyword): #faccio append solo se non l'ho gia inserito nella lista
+                       n_cves_with_metrics_and_match += 1
+                       cve_matching_keyword=dict()#dizionario contenente informazioni su singolo cve con corrispondenze su parole chiave
+                       #stampe a video per CL
+                       print(f"--> CVE ID with metrics and keywords ('{techniqueKeyWord}')->('{word}')  in description: {cve_data.get_cveId()} ")
+                       print(f"--> CVE description: {cve_data.get_description()}")
+                       print(f"--> CVE METRICS: ")
+                       print(f"                BASE SCORE: [{cve_data.get_cvss_baseScore()}] ")
+                       print(f"                ATTACK COMPLEXITY: {cve_data.get_cvss_attackComplexity()} ")
+                       print(f"                ATTACK BASE SEVERITY: {cve_data.get_cvss_baseSeverity()} ")
+                       print(f"                ATTACK CONFIDENTIALITY IMPACT: {cve_data.get_cvss_confidentialityImpact()} ")
+                       print(f"                ATTACK INTEGRITY IMPACT: {cve_data.get_cvss_integrityImpact()} ")
+                       print(f"                ATTACK AVAILABILITY IMPACT: {cve_data.get_cvss_availabilityImpact()} ")
+                       print(f"                PRIVILEGES REQUIRED: {cve_data.get_cvss_privilegesRequired()} ")
+                       print("-------------------------------------------------------------------------------")
 
-                   #popolo metriche che mi servono
-                   cve_metrics = dict()
-                   cve_metrics['baseScore']=cve_data.get_cvss_baseScore()
-                   cve_metrics['attackComplexity'] = cve_data.get_cvss_attackComplexity()
-                   cve_metrics['baseSeverity'] = cve_data.get_cvss_baseSeverity()
-                   cve_metrics['confidentialityImpact'] = cve_data.get_cvss_confidentialityImpact()
-                   cve_metrics['integrityImpact'] = cve_data.get_cvss_integrityImpact()
-                   cve_metrics['availabilityImpact'] = cve_data.get_cvss_availabilityImpact()
-                   cve_metrics['privilegesRequired'] = cve_data.get_cvss_privilegesRequired()
-                   #creo oggetto da inserire nella lista
-                   cve_matching_keyword['cve_id'] = cve_data.get_cveId()
-                   cve_matching_keyword['metrics'] = cve_metrics
-                   #aggiungo oggetto alla lista solo se il cve_id non è già presente nella lista dei match
-                   if not is_cve_id_present(cve_data.get_cveId(), list_cves_matching_keyword): #faccio append solo se non l'ho gia trovato
-                     n_cves_with_metrics_and_match += 1
-                     list_cves_matching_keyword.append(cve_matching_keyword)
+                       #popolo metriche che mi servono
+                       cve_metrics = dict()
+                       cve_metrics['baseScore']=cve_data.get_cvss_baseScore()
+                       cve_metrics['attackComplexity'] = cve_data.get_cvss_attackComplexity()
+                       cve_metrics['baseSeverity'] = cve_data.get_cvss_baseSeverity()
+                       cve_metrics['confidentialityImpact'] = cve_data.get_cvss_confidentialityImpact()
+                       cve_metrics['integrityImpact'] = cve_data.get_cvss_integrityImpact()
+                       cve_metrics['availabilityImpact'] = cve_data.get_cvss_availabilityImpact()
+                       cve_metrics['privilegesRequired'] = cve_data.get_cvss_privilegesRequired()
+                       #creo oggetto da inserire nella lista
+                       cve_matching_keyword['cve_id'] = cve_data.get_cveId()
+                       cve_matching_keyword['metrics'] = cve_metrics
+                       #aggiungo oggetto alla lista solo se il cve_id non è già presente nella lista dei match
+                       list_cves_matching_keyword.append(cve_matching_keyword)
+
+
+
+
+
 
     print(f"---REPORT:number of CVEs with required metrics:{n_cves_with_metrics_and_match} out of {n_cves} CVEs---")
     #print(f"---REPORT: list of matching CVEs:{list_cves_matching_keyword}")#stampa debug
