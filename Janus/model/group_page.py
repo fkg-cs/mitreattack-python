@@ -226,9 +226,6 @@ def get_group_info(external_id):
     else:
         output_list["mobile_assets_intestation"] = f"There are no asset targeted by {output_list['name']} group in mobile context."
 
-    print(output_list["enterprise_campaigns"])
-    print(output_list["ics_campaigns"])
-    print(output_list["mobile_campaigns"])
     return output_list
 
 if __name__ == "__main__":
