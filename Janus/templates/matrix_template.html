@@ -8,14 +8,14 @@
 
 </head>
 <body>
-<h1>{{output_list["header"]}}</h1>
+<h1>{{output_list["title"]}}</h1>
 <h2>{{output_list["report"]}}</h2>
-
+<hr>
 {% for tactic in output_list["tactics"]%}
 
     <h2>Tactic: {{tactic["name"]}} (ATT&CK ID: {{tactic["external_id"]}})</h2>
      <p>{{tactic["description"]}}</p>
-     <p>More at: <a href= " {{tactic['url']}} ">{{tactic['url']}}</a> </p>
+     <p>(<a href= " {{tactic['url']}} ">{{tactic['url']}}</a>)</p>
 
      <p>{{tactic["techniques_intestation"]}}</p>
           {% for technique in tactic["techniques"]%}
@@ -23,12 +23,11 @@
                 <p>      {{technique["description"]}}</p>
                 <p>      {{technique["subtechniques_intestation"]}}</p>
                     {% for subtechnique in technique["subtechniques"]%}
-                        <h4>Subtechnique: {{subtechnique["name"]}} (ATT&CK ID: {{subtechnique["external_id"]}})</h4>
-                            <p>{{subtechnique["description"]}}</p>
+                        <h4>Subtechnique: {{subtechnique["name"]}} (ATT&CK ID: {{subtechnique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{subtechnique['external_id']}}"> View details</a></h4>
+                    {% endfor %}
+           <br>
           {% endfor %}
-
-          {% endfor %}
-
+<hr>
 {% endfor %}
 
 </body>
