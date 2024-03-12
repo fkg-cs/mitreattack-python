@@ -15,7 +15,7 @@ def get_enterprise_matrix():
     n_tactics = len(tactics)
 
     output_list['title'] = "ENTERPRISE ATT&CK MATRIX"
-    output_list['header'] = " TACTICS AND TECHNIQUES RELATIONS IN ENTERPRISE ATT&CK MATRIX "
+
     output_list["tactics"] = []
 
     for tactic in tactics:

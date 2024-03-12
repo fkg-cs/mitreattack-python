@@ -15,7 +15,7 @@ def get_ics_matrix():
     n_tactics = len(tactics)
 
     output_list['title'] = "ICS ATT&CK MATRIX"
-    output_list['header'] = " TACTICS AND TECHNIQUES RELATIONS IN ICS ATT&CK MATRIX "
+
     output_list["tactics"] = []
 
     for tactic in tactics:
@@ -53,7 +53,7 @@ def get_ics_matrix():
                         sub = s["object"]
                         my_subtechnique["name"] = sub.name
                         my_subtechnique["external_id"] = mitre_attack_data.get_attack_id(sub.id)
-                        my_subtechnique["description"] = sub.description
+                        #my_subtechnique["description"] = sub.description
 
                         my_technique["subtechniques"].append(my_subtechnique)
                     my_technique["subtechniques"].sort(key=lambda x: x['external_id'], reverse=False)
