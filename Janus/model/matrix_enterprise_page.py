@@ -1,6 +1,7 @@
 import pprint
 from mitreattack.stix20 import MitreAttackData
 
+
 def get_enterprise_matrix():
     n_tactics = 0
     n_techniques = 0
@@ -28,8 +29,7 @@ def get_enterprise_matrix():
         my_tactic["description"] = tactic.description
         my_tactic["url"] = url
 
-        techniques = mitre_attack_data.get_techniques_by_tactic(tactic.x_mitre_shortname, "enterprise-attack", remove_revoked_deprecated=True)
-
+        techniques = mitre_attack_data.get_techniques_by_tactic(tactic.x_mitre_shortname, "enterprise-attack",remove_revoked_deprecated=True)
 
         my_tactic["techniques_intestation"] = f"There are {len(techniques)} techniques related to {tactic.name} tactic:"
         my_tactic["techniques"] = []
@@ -45,15 +45,14 @@ def get_enterprise_matrix():
                 my_technique["subtechniques"] = []
                 subs = mitre_attack_data.get_subtechniques_of_technique(technique.id)
                 if len(subs) >= 1:
-                    my_technique[
-                        "subtechniques_intestation"] = f"There are {len(subs)} subtechniques related to {technique.name} techinique:"
+                    my_technique["subtechniques_intestation"] = f"There are {len(subs)} subtechniques related to {technique.name} techinique:"
                     n_subtechniques = n_subtechniques + len(subs)
                     for s in subs:
                         my_subtechnique = dict()
                         sub = s["object"]
                         my_subtechnique["name"] = sub.name
                         my_subtechnique["external_id"] = mitre_attack_data.get_attack_id(sub.id)
-                        #my_subtechnique["description"] = sub.description
+                        # my_subtechnique["description"] = sub.description
 
                         my_technique["subtechniques"].append(my_subtechnique)
                     my_technique["subtechniques"].sort(key=lambda x: x['external_id'], reverse=False)
@@ -64,6 +63,7 @@ def get_enterprise_matrix():
 
     output_list["report"] = f"RETRIVED: {n_tactics} TACTICS , {n_techniques} TECHNIQUES , {n_subtechniques} SUBTECHNIQUES."
     return output_list
+
 
 if __name__ == "__main__":
     get_enterprise_matrix()
