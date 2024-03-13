@@ -13,11 +13,11 @@ def get_technique_info(id):
     output_list["mitigations"] = []
 
     technique=mitre_attack_enterprise_data.get_object_by_attack_id(id, "attack-pattern")
-
+    print(f"__________________________________________>debug cerco {id} technique: {technique}")
     if technique is None:
         technique = mitre_attack_ics_data.get_object_by_attack_id(id, "attack-pattern")
-    elif technique is None:
-        technique = mitre_attack_mobile_data.get_object_by_attack_id(id, "attack-pattern")
+        if technique is None:
+            technique = mitre_attack_mobile_data.get_object_by_attack_id(id, "attack-pattern")
 
     output_list["name"] = technique.name
     output_list["external_id"] = id
@@ -107,4 +107,4 @@ def get_technique_info(id):
     return output_list
 
 if __name__ == "__main__":
-    get_technique_info("T1418")
+    get_technique_info("T1474")
