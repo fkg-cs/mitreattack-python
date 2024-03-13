@@ -1,11 +1,11 @@
 from flask import Flask, render_template
 
-from Janus.model.group_page import get_group_info
-from Janus.model.groups_tree_page import get_groups_list
-from Janus.model.matrix_enterprise_page import get_enterprise_matrix
-from Janus.model.matrix_ics_page import get_ics_matrix
-from Janus.model.matrix_mobile_page import get_mobile_matrix
-from Janus.model.technique_page import get_technique_info
+from Janus.controller.group_page import get_group_info
+from Janus.controller.groups_tree_page import get_groups_list
+from Janus.controller.matrix_enterprise_page import get_enterprise_matrix
+from Janus.controller.matrix_ics_page import get_ics_matrix
+from Janus.controller.matrix_mobile_page import get_mobile_matrix
+from Janus.controller.technique_page import get_technique_info
 
 app = Flask(__name__, static_folder=r'..\Janus\static',template_folder=r'..\Janus\templates')
 @app.route('/')
