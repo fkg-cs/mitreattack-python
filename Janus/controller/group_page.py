@@ -171,63 +171,69 @@ def get_group_info(external_id):
         for technique in output_list["enterprise_techniques"]:
             assets_targeted = mitre_attack_enterprise_data.get_assets_targeted_by_technique(technique["stix_id"])
 
-            if len(assets_targeted) > 0:
-                output_list[
-                    "enterprise_assets_intestation"] = f"There are {len(assets_targeted)} asset targeted by {output_list['name']} group in enterprise context:"
-            else:
-                output_list[
-                    "enterprise_assets_intestation"] = f"There are no asset targeted by {output_list['name']} group in enterprise context."
             for asset in assets_targeted:
                 my_asset = dict()
                 my_asset["external_id"] = asset['object']['external_references'][0]['external_id']
                 my_asset["name"] = asset['object']['name']
                 my_asset["description"] = asset['object']['description']
-                output_list["enterprise_assets"].append(my_asset)
+                if not my_asset in output_list["enterprise_assets"]:  # controllo di non aver già trovato questo asset
+                    output_list["enterprise_assets"].append(my_asset)
+        n_assets=len(output_list["enterprise_assets"])
+        if n_assets > 0:
+            output_list["enterprise_assets_intestation"] = f"There are {n_assets} asset targeted by {output_list['name']} group in enterprise context:"
+        else:
+            output_list["enterprise_assets_intestation"] = f"There are no asset targeted by {output_list['name']} group in enterprise context."
     else:
         output_list["enterprise_assets_intestation"] = f"There are no asset targeted by {output_list['name']} group in enterprise context."
 
     #gestione assets targhettizati da tecniche ics
     output_list["ics_assets"] = []
+
     if len(output_list["ics_techniques"]) > 0:
         for technique in output_list["ics_techniques"]:
             assets_targeted = mitre_attack_ics_data.get_assets_targeted_by_technique(technique["stix_id"])
 
-            if len(assets_targeted) > 0:
-                output_list[
-                    "ics_assets_intestation"] = f"There are {len(assets_targeted)} asset targeted by {output_list['name']} group in ICS context:"
-            else:
-                output_list[
-                    "ics_assets_intestation"] = f"There are no asset targeted by {output_list['name']} group in ICS context."
             for asset in assets_targeted:
                 my_asset = dict()
                 my_asset["external_id"] = asset['object']['external_references'][0]['external_id']
                 my_asset["name"] = asset['object']['name']
                 my_asset["description"] = asset['object']['description']
-                output_list["ics_assets"].append(my_asset)
+                if not my_asset in output_list["ics_assets"]:#controllo di non aver già trovato questo asset
+                   output_list["ics_assets"].append(my_asset)
+
+        n_assets = len(output_list["ics_assets"])
+        if n_assets > 0:
+            output_list["ics_assets_intestation"] = f"There are {n_assets} asset targeted by {output_list['name']} group in ICS context:"
+        else:
+            output_list["ics_assets_intestation"] = f"There are no asset targeted by {output_list['name']} group in ICS context."
     else:
         output_list["ics_assets_intestation"] = f"There are no asset targeted by {output_list['name']} group in ICS context."
 
     #gestione assets targhettizati da tecniche mobile
     output_list["mobile_assets"] = []
-    if len(output_list["ics_techniques"]) > 0:
+
+    if len(output_list["mobile_techniques"]) > 0:
         for technique in output_list["mobile_techniques"]:
             assets_targeted = mitre_attack_mobile_data.get_assets_targeted_by_technique(technique["stix_id"])
 
-            if len(assets_targeted) > 0:
-                output_list[
-                    "mobile_assets_intestation"] = f"There are {len(assets_targeted)} asset targeted by {output_list['name']} group in mobile context:"
-            else:
-                output_list[
-                    "mobile_assets_intestation"] = f"There are no asset targeted by {output_list['name']} group in mobile context."
             for asset in assets_targeted:
                 my_asset = dict()
                 my_asset["external_id"] = asset['object']['external_references'][0]['external_id']
                 my_asset["name"] = asset['object']['name']
                 my_asset["description"] = asset['object']['description']
-                output_list["mobile_assets"].append(my_asset)
+                if not my_asset in output_list["mobile_assets"]:#controllo di non aver già trovato questo asset
+                   output_list["mobile_assets"].append(my_asset)
+
+        n_assets = len(output_list["mobile_assets"])
+        if n_assets > 0:
+            output_list[
+                "mobile_assets_intestation"] = f"There are { n_assets} asset targeted by {output_list['name']} group in mobile context:"
+        else:
+            output_list[
+                "mobile_assets_intestation"] = f"There are no asset targeted by {output_list['name']} group in mobile context."
     else:
         output_list["mobile_assets_intestation"] = f"There are no asset targeted by {output_list['name']} group in mobile context."
-
+    pprint.pprint(output_list["ics_assets"])
     return output_list
 
 if __name__ == "__main__":

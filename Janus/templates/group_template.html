@@ -60,7 +60,7 @@
 <div class="container">
 
     <div class="row">
-        <div class="text-center">
+        <div class="text-center pt-2">
             <h1>{{output_list["name"]}} (ATT&CK ID: {{output_list["external_id"]}})</h1>
         </div>
         <div>
@@ -72,7 +72,7 @@
 
     <div class="row card my-3">
         <div class="card-header">
-            Enterprise Campaigns attribuited to {{output_list["name"]}}
+            <h2>Enterprise Campaigns attribuited to {{output_list["name"]}}</h2>
         </div>
         <div class="card-body">
             <p class="py-1">{{output_list["enterprise_campaigns_intestation"]}}</p>
@@ -87,7 +87,7 @@
 
     <div class="row card my-3">
         <div class="card-header">
-            ICS Campaigns attribuited to {{output_list["name"]}}
+            <h2>ICS Campaigns attribuited to {{output_list["name"]}}</h2>
         </div>
         <div class="card-body">
             <p class="py-1">{{output_list["ics_campaigns_intestation"]}}</p>
@@ -102,7 +102,7 @@
 
     <div class="row card my-3">
         <div class="card-header">
-            Mobile Campaigns attribuited to {{output_list["name"]}}
+            <h2>Mobile Campaigns attribuited to {{output_list["name"]}}</h2>
         </div>
         <div class="card-body">
             <p class="py-1">{{output_list["mobile_campaigns_intestation"]}}</p>
@@ -119,7 +119,7 @@
      {% if  somma >= 1 %}
     <div class="row card">
         <div class="card-header">
-            Report campaigns performed by {{output_list["name"]}}
+            <h2>Report campaigns performed by {{output_list["name"]}}</h2>
         </div>
         <div class="card-body">
             <div class="d-flex justify-content-center align-items-center pb-5">
@@ -161,7 +161,7 @@
 
     <div class="row card">
         <div class="card-header">
-            Techniques used by {{output_list["name"]}}
+            <h2>Techniques used by {{output_list["name"]}}</h2>
         </div>
         <div class="card-body">
             <div class="container">
@@ -221,7 +221,7 @@
 
     <div class="row card">
         <div class="card-header">
-            Software used by {{output_list["name"]}}
+            <h2>Software used by {{output_list["name"]}}</h2>
         </div>
         <div class="card-body">
             <div class="container">
@@ -235,8 +235,9 @@
                     <div id="collapse-en-sw" class="collapse multi-collapse">
                         <div class="card-body">
                             <p class="py-1">{{output_list["enterprise_software_intestation"]}}</p>
-                            {% for technique in output_list["enterprise_software"]%}
-                            <h4>{{technique["name"]}} (ATT&CK ID: {{technique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{technique['external_id']}}"> View details</a></h4>
+                            {% for software in output_list["enterprise_software"]%}
+                            <h4>{{software["name"]}} (ATT&CK ID: {{software["external_id"]}})</h4>
+                            <p>{{software["description"]}}</p>
                             {% endfor %}
                         </div>
                     </div>
@@ -252,8 +253,9 @@
                     <div id="collapse-ics-sw" class="collapse multi-collapse">
                         <div class="card-body">
                             <p class="py-1">{{output_list["ics_software_intestation"]}}</p>
-                            {% for technique in output_list["ics_software"]%}
-                            <h4>{{technique["name"]}} (ATT&CK ID: {{technique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{technique['external_id']}}"> View details</a></h4>
+                            {% for software in output_list["ics_software"]%}
+                            <h4>{{software["name"]}} (ATT&CK ID: {{software["external_id"]}})</h4>
+                            <p>{{software["description"]}}</p>
                             {% endfor %}
                         </div>
                     </div>
@@ -262,15 +264,16 @@
                 <div class="row card">
                     <div class="card-header">
                         <a class="collapsed d-block" data-bs-toggle="collapse" href="#collapse-mobile-sw" role="button" aria-expanded="false" aria-controls="#collapse-mobile-sw" style="text-decoration: none;font-size: 1.3em;">
-                            <i class="fa fa-chevron-down pull-right"></i> Mobile techniques used by {{output_list["name"]}} </a>
+                            <i class="fa fa-chevron-down pull-right"></i> Mobile software used by {{output_list["name"]}} </a>
                         </a>
                     </div>
 
                     <div id="collapse-mobile-sw" class="collapse multi-collapse">
                         <div class="card-body">
-                            <p class="py-1">{{output_list["mobile_sw_intestation"]}}</p>
-                            {% for technique in output_list["mobile_sw"]%}
-                            <h4>{{technique["name"]}} (ATT&CK ID: {{technique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{technique['external_id']}}"> View details</a></h4>
+                            <p class="py-1">{{output_list["mobile_software_intestation"]}}</p>
+                            {% for software in output_list["mobile_software"]%}
+                            <h4>{{software["name"]}} (ATT&CK ID: {{software["external_id"]}})</h4>
+                            <p>{{software["description"]}}</p>
                             {% endfor %}
                         </div>
                     </div>
@@ -282,7 +285,7 @@
 
     <div class="row card">
         <div class="card-header">
-            Assets targeted by {{output_list["name"]}}
+            <h2>Assets targeted by {{output_list["name"]}}</h2>
         </div>
         <div class="card-body">
             <div class="container">
@@ -296,8 +299,9 @@
                     <div id="collapse-en-as" class="collapse multi-collapse">
                         <div class="card-body">
                             <p class="py-1">{{output_list["enterprise_assets_intestation"]}}</p>
-                            {% for technique in output_list["enterprise_assets"]%}
-                            <h4>{{technique["name"]}} (ATT&CK ID: {{technique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{technique['external_id']}}"> View details</a></h4>
+                            {% for asset in output_list["enterprise_assets"]%}
+                            <h6>{{asset["name"]}} (ATT&CK ID: {{asset["external_id"]}})</h6>
+                            <p class="py-1">{{asset["description"]}}</p>
                             {% endfor %}
                         </div>
                     </div>
@@ -313,8 +317,9 @@
                     <div id="collapse-ics-as" class="collapse multi-collapse">
                         <div class="card-body">
                             <p class="py-1">{{output_list["ics_assets_intestation"]}}</p>
-                            {% for technique in output_list["ics_assets"]%}
-                            <h4>{{technique["name"]}} (ATT&CK ID: {{technique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{technique['external_id']}}"> View details</a></h4>
+                            {% for asset in output_list["ics_assets"]%}
+                            <h6>{{asset["name"]}} (ATT&CK ID: {{asset["external_id"]}})</h6>
+                            <p class="py-1">{{asset["description"]}}</p>
                             {% endfor %}
                         </div>
                     </div>
@@ -330,8 +335,9 @@
                     <div id="collapse-mobile-as" class="collapse multi-collapse">
                         <div class="card-body">
                             <p class="py-1">{{output_list["mobile_assets_intestation"]}}</p>
-                            {% for technique in output_list["mobile_assets"]%}
-                            <h4>{{technique["name"]}} (ATT&CK ID: {{technique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{technique['external_id']}}"> View details</a></h4>
+                            {% for asset in output_list["mobile_assets"]%}
+                            <h6>{{asset["name"]}} (ATT&CK ID: {{asset["external_id"]}})</h6>
+                            <p class="py-1">{{asset["description"]}}</p>
                             {% endfor %}
                         </div>
                     </div>
