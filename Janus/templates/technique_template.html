@@ -5,82 +5,216 @@
     <title>Technique {{output_list["external_id"]}} Details </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="janus-bg">
- <div class="loader-wrapper" id="loader-wrapper">
-        <div class="loader"></div>
+
+<nav class="navbar sticky-top border-bottom navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="http://127.0.0.1:5000" style="color:#001049">JANUS</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="http://127.0.0.1:5000/CTI_groups">CTI Groups</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Switch Matrix
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="http://127.0.0.1:5000/matrix_enterprise">ENTERPRISE MATRIX</a></li>
+                <li><a class="dropdown-item" href="http://127.0.0.1:5000/matrix_ics">ICS MATRIX</a></li>
+                <li><a class="dropdown-item" href="http://127.0.0.1:5000/matrix_mobile">MOBILE MATRIX</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+</nav>
+
+<div class="container pt-4">
+    <div class="row">
+        <div class="text-center">
+            <h1>{{output_list["name"]}} (ATT&CK ID: {{output_list["external_id"]}})</h1>
+        </div>
+        <div>
+             <p class="my-3">{{output_list["description"]}}</p>
+             <p class="my-3">PLATFORMS: {{output_list["platforms"]}}</p>
+             <p class="my-3">CREATED: {{output_list["creation_date"]}}</p>
+        </div>
+    </div>
+</div>
+
+<div class="container pt-4">
+    <div class="row card">
+        <div class="card-header text-center">
+            <h1>RISK SCORING</h1>
+        </div>
+        <div class="card-body">
+            <div class="d-flex justify-content-center">
+                <p>
+                    Scoring range and parameters are based on CVSS 3.1
+                </p>
+            </div>
+            <div class="d-flex">
+                <div class="col">
+                    <div class="d-flex h-100 justify-content-center align-items-center">
+                        <div id="baseScore" class="row text-center btn w-50 h-100 text-lg d-flex align-items-center justify-content-center
+                            <div class="row d-flex justify-content-center text-center">
+                                Base Score
+                                <br>
+                               [ {{output_list["risk_scores"]["baseScore"]}} ]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <ul class="d-flex justify-content-center align-items-center list-group list-group-flush">
+                         <li class="list-group-item text-center w-100"></li>
+                         <li class="list-group-item text-center w-100">Attack Complexity : [ {{output_list["risk_scores"]["attackComplexity"]}} ]</li>
+                         <li class="list-group-item text-center w-100">Confidentiality Impact : [ {{output_list["risk_scores"]["confidentialityImpact"]}} ]</li>
+                         <li class="list-group-item text-center w-100">Integrity Impact : [ {{output_list["risk_scores"]["integrityImpact"]}} ]</li>
+                         <li class="list-group-item text-center w-100">Availability Impact : [ {{output_list["risk_scores"]["availabilityImpact"]}} ]</li>
+                         <li class="list-group-item text-center w-100">Privileges Required : [ {{output_list["risk_scores"]["privilegesRequired"]}} ]</li>
+                         <li class="list-group-item text-center w-100"></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text-center py-3">
+                This scoring is obtained via scraping of all CVEs reported until now.
+            </div>
+            <!-- [{'baseScore': 6.57, 'attackComplexity': 'LOW', 'confidentialityImpact': 'HIGH', 'integrityImpact': 'HIGH', 'availabilityImpact': 'HIGH', 'privilegesRequired': 'MEDIUM'}] -->
+        </div>
     </div>
 
-   <h1>{{output_list["name"]}} (ATT&CK ID: {{output_list["external_id"]}})</h1>
-     <p1>{{output_list["description"]}}</p1> <br><br>
-     <p2>PLATFORMS: {{output_list["platforms"]}}</p2><br>
-     <p2>CREATED: {{output_list["creation_date"]}}</p2><br><br>
- <h1>RISK SCORING FROM CVSS 3.1:</h1>
-     <p1>[{{output_list["risk_scores"]}}]</p1>
- <br><br>
+    <div class="row card my-4">
 
-     <p1>{{output_list["subtechniques_intestation"]}}</p1>
-        {% for subtechnique in output_list["subtechniques"]%}
-        <h3>{{subtechnique["name"]}} (ATT&CK ID: {{subtechnique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{subtechnique['external_id']}}"> View details</a></h3>
-             <p3>{{subtechnique["description"]}}</p3>
-        {% endfor %}
-   <hr>
-   <h2>Detection of technique</h2>
-   <p2>{{output_list["detection"]}}</p2>
-   <hr>
-   <h2>Mitigation of technique</h2>
-   <p2>{{output_list["mitigations_intestation"]}}</p2>
-   {% for mitigation in output_list["mitigations"]%}
-        <h3>{{mitigation["name"]}} (ATT&CK ID: {{mitigation["external_id"]}})</h3>
-             <p3>{{mitigation["description"]}}</p3>
-        {% endfor %}
-   <hr>
-   <h2>Use in different campaigns</h2>
-   <p2>{{output_list["campaign_intestation"]}}</p2>
-   {% for campaign in output_list["campaigns"]%}
-        <h3>{{campaign["name"]}} (ATT&CK ID: {{campaign["external_id"]}})</h3>
-             <p3>{{campaign["description"]}}</p3>
-        {% endfor %}
- {% set somma = output_list["n_enterprise_campaigns"]+output_list["n_ics_campaigns"]+output_list["n_mobile_campaigns"] %}
- {% if  somma >= 1 %}
-     <canvas id="myPieChart" width="400" height="400"></canvas>
-     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        var ctx = document.getElementById('myPieChart').getContext('2d');
-        var myPieChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['ENTERPRISE campaigns', 'ICS campaigns', 'MOBILE campaigns'],
-                datasets: [{
-                    label: 'using {{output_list["name"]}}',
-                    data: ['{{output_list["n_enterprise_campaigns"]}}', '{{output_list["n_ics_campaigns"]}}', '{{output_list["n_mobile_campaigns"]}}'],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.5)',
-                        'rgba(54, 162, 235, 0.5)',
-                        'rgba(255, 206, 86, 0.5)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: false, // Imposta la dimensione del grafico
-            }
-        });
-    });
-</script>
-{% endif %}
+        <div class="card-header"> <h2>Subtechniques</h2> </div>
+        <div class="card-body">
+            <p class="py-3">{{output_list["subtechniques_intestation"]}}</p>
+            <div class="px-3">
+                {% for subtechnique in output_list["subtechniques"]%}
+                <div class="py-2">
+                    <h3>{{subtechnique["name"]}} (ATT&CK ID: {{subtechnique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{subtechnique['external_id']}}" class="color:blue !important; font-weight:normal;"> View subtechnique details</a></h3>
+                    <p3>{{subtechnique["description"]}}</p3>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        </div>
+
+        <div class="row card my-4">
+            <div class="card-header">
+                <h2>Detection of technique</h2>
+            </div>
+            <div class="card-body">
+                {{output_list["detection"]}}
+            </div>
+        </div>
+
+        <div class="row card my-4">
+            <div class="card-header">
+                <h2>Mitigation of technique</h2>
+            </div>
+            <div class="card-body">
+                <p class="py-3">{{output_list["mitigations_intestation"]}}</p>
+                <div class="px-3">
+                    {% for mitigation in output_list["mitigations"]%}
+                        <div class="py-2">
+                            <h3>{{mitigation["name"]}} (ATT&CK ID: {{mitigation["external_id"]}})</h3>
+                            <p3>{{mitigation["description"]}}</p3>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    <div class="row card my-4">
+        <div class="card-header">
+            <h2>Use in different Campains</h2>
+        </div>
+        <div class="card-body">
+            <p class="py-3">{{output_list["campaign_intestation"]}}</p>
+            {% set somma = output_list["n_enterprise_campaigns"]+output_list["n_ics_campaigns"]+output_list["n_mobile_campaigns"] %}
+            {% if  somma >= 1 %}
+            <div class="d-flex justify-content-center align-items-center pb-5">
+                <canvas id="myPieChart" width="400" height="400" ></canvas>
+            </div>
+                <div class="px-3">
+                    {% for campaign in output_list["campaigns"]%}
+                        <h3>{{campaign["name"]}} (ATT&CK ID: {{campaign["external_id"]}})</h3>
+                        {{campaign["description"]}}
+                    {% endfor %}
+                </div>
+                 <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                    var ctx = document.getElementById('myPieChart').getContext('2d');
+                    var myPieChart = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: ['ENTERPRISE campaigns', 'ICS campaigns', 'MOBILE campaigns'],
+                            datasets: [{
+                                label: 'using {{output_list["name"]}}',
+                                data: ['{{output_list["n_enterprise_campaigns"]}}', '{{output_list["n_ics_campaigns"]}}', '{{output_list["n_mobile_campaigns"]}}'],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.5)',
+                                    'rgba(54, 162, 235, 0.5)',
+                                    'rgba(255, 206, 86, 0.5)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: false, // Imposta la dimensione del grafico
+                        }
+                    });
+                });
+            </script>
+            {% endif %}
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
-        window.addEventListener("load", function () {
-            var loader = document.getElementById("loader-wrapper");
-            loader.style.display = "none"; // Nasconde l'animazione una volta caricata la pagina
-        });
+
+    $(function () {
+        var score = parseFloat( {{output_list["risk_scores"]["baseScore"]}} );
+
+        var color = 'red';
+            if (isNaN(score) || score < 0.1) {
+            $("#baseScore").addClass("btn-light");
+            } else
+            if (score >= 0.1 && score <= 3.9) {
+                $("#baseScore").addClass("btn-success");
+            } else
+            if (score >= 4.0 && score <= 6.9) {
+                $("#baseScore").addClass("btn-yellow");
+            } else
+            if (score >= 7.0 && score <= 8.9) {
+                $("#baseScore").addClass("btn-warning");
+            } else
+            if (score >= 9.0 && score <= 10.0) {
+                $("#baseScore").addClass("btn-danger");
+            }
+
+    });
     </script>
 </body>
 </html>
