@@ -79,13 +79,11 @@
                     <div class="row card">
                         <div class="card-header">
                             <a class="collapsed d-block" data-bs-toggle="collapse" href="#collapse-{{ loop.index }}-{{ i }}" role="button" aria-expanded="false" aria-controls="#collapse-{{ loop.index }}-{{ i }}" style="text-decoration: none;font-size: 1.3em;">
-                                <i class="fa fa-chevron-down pull-right"></i> Technique: {{ technique["name"] }} (ATT&CK ID: {{ technique["external_id"] }})
+                                <i class="fa fa-chevron-down pull-right"></i> Technique: {{ technique["name"] }} (ATT&CK ID: {{ technique["external_id"] }}) <a href="http://127.0.0.1:5000/techniques/{{ technique['external_id'] }}" style="color:blue;" class="px-5 py-2"> Open technique page</a>
                             </a>
                         </div>
                         <div id="collapse-{{ loop.index }}-{{ i }}" class="collapse multi-collapse">
                             <div class="card-body">
-                                <a href="http://127.0.0.1:5000/techniques/{{ technique['external_id'] }}" style="color:blue;" class="py-2"> Open technique page</a>
-                                <br>
                                 <p>{{ technique["description"] }}</p>
                                 <p>{{ technique["subtechniques_intestation"] }}</p>
                                 {% for subtechnique in technique["subtechniques"] %}
