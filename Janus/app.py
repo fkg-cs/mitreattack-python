@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 
 from Janus.controller.group_page import get_group_info
 from Janus.controller.groups_tree_page import get_groups_list
