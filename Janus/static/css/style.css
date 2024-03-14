@@ -56,7 +56,7 @@ color:#001049;
 }
 
 @keyframes janus-logo-rotate {
-  0 {
+  0% {
     transform: rotateY(0);
   }
   100% {
