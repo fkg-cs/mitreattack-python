@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
 </head>
 <body class="janus-bg">
 
@@ -59,7 +61,7 @@
         <div class="card-body">
             <div class="d-flex justify-content-center">
                 <p>
-                    Scoring range and parameters are based on CVSS 3.1
+                    Scores are based on CVSS 3.1 scale
                 </p>
             </div>
             <div class="d-flex">
@@ -88,17 +90,17 @@
             </div>
 
             <div class="text-center py-3">
-                This scoring is obtained via scraping of all CVEs reported until now.
+                This scoring is obtained via scraping of all CVEs reported until now click here to download
             </div>
             <!-- [{'baseScore': 6.57, 'attackComplexity': 'LOW', 'confidentialityImpact': 'HIGH', 'integrityImpact': 'HIGH', 'availabilityImpact': 'HIGH', 'privilegesRequired': 'MEDIUM'}] -->
         </div>
-    </div>
+
 
     <div class="row card my-4">
 
         <div class="card-header"> <h2>Subtechniques</h2> </div>
         <div class="card-body">
-            <p class="py-3">{{output_list["subtechniques_intestation"]}}</p>
+            {{output_list["subtechniques_intestation"]}} <!-- <p class="py-3"> -->
             <div class="px-3">
                 {% for subtechnique in output_list["subtechniques"]%}
                 <div class="py-2">
@@ -124,7 +126,7 @@
                 <h2>Mitigation of technique</h2>
             </div>
             <div class="card-body">
-                <p class="py-3">{{output_list["mitigations_intestation"]}}</p>
+                <p class="py-1">{{output_list["mitigations_intestation"]}}</p>
                 <div class="px-3">
                     {% for mitigation in output_list["mitigations"]%}
                         <div class="py-2">
@@ -164,14 +166,14 @@
                                 label: 'using {{output_list["name"]}}',
                                 data: ['{{output_list["n_enterprise_campaigns"]}}', '{{output_list["n_ics_campaigns"]}}', '{{output_list["n_mobile_campaigns"]}}'],
                                 backgroundColor: [
-                                    'rgba(255, 99, 132, 0.5)',
-                                    'rgba(54, 162, 235, 0.5)',
-                                    'rgba(255, 206, 86, 0.5)'
+                                    'rgb(60,141,232)',
+                                    'rgba(255,251,0,0.66)',
+                                    'rgba(194,47,243,0.87)'
                                 ],
                                 borderColor: [
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(255, 206, 86, 1)'
+                                    'rgb(60,141,232)',
+                                    'rgba(255,251,0,0.66)',
+                                    'rgba(194,47,243,0.87)'
                                 ],
                                 borderWidth: 1
                             }]
@@ -191,7 +193,7 @@
 
 </div>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
 <script>
 
     $(function () {

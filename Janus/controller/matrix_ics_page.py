@@ -62,7 +62,7 @@ def get_ics_matrix():
 
         output_list["tactics"].append(my_tactic)
 
-    output_list["report"] = f"RETRIVED: {n_tactics} TACTICS , {n_techniques} TECHNIQUES , {n_subtechniques} SUBTECHNIQUES."
+    output_list["report"] = f"RETRIVED: {n_tactics} TACTICS , {n_techniques} TECHNIQUES , {n_subtechniques} SUBTECHNIQUE."
     return output_list
 
 

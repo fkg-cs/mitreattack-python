@@ -2,96 +2,88 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{output_list["title"]}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ output_list["title"] }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
-
 </head>
 <body class="janus-bg">
-
     <nav class="navbar sticky-top border-bottom navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="http://127.0.0.1:5000" style="color:#001049">JANUS</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" href="http://127.0.0.1:5000/CTI_groups">CTI Groups</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Switch Matrix
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="http://127.0.0.1:5000/matrix_enterprise">ENTERPRISE MATRIX</a></li>
-                <li><a class="dropdown-item" href="http://127.0.0.1:5000/matrix_ics">ICS MATRIX</a></li>
-                <li><a class="dropdown-item" href="http://127.0.0.1:5000/matrix_mobile">MOBILE MATRIX</a></li>
-              </ul>
-            </li>
-          </ul>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-secondary" type="submit">Search</button>
-            </form>
+        <div class="container-fluid">
+            <a class="navbar-brand" href="http://127.0.0.1:5000" style="color:#001049">JANUS</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://127.0.0.1:5000/CTI_groups">CTI Groups</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Switch Matrix
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="http://127.0.0.1:5000/matrix_enterprise">ENTERPRISE MATRIX</a></li>
+                            <li><a class="dropdown-item" href="http://127.0.0.1:5000/matrix_ics">ICS MATRIX</a></li>
+                            <li><a class="dropdown-item" href="http://127.0.0.1:5000/matrix_mobile">MOBILE MATRIX</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search technique via ID" aria-label="Search">
+                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                </form>
+            </div>
         </div>
-      </div>
-</nav>
-
-    <div class="row text-center py-3">
-        <h1 class="text-center janus-blue">{{output_list["title"]}}</h1>
-        <h2>{{output_list["report"]}}</h2>
+    </nav>
+    <div class="container w-75 pt-3 justify-content-center">
+        <div class="row text-center py-3">
+            <h1 class="text-center janus-blue">{{ output_list["title"] }}</h1>
+            <h2>{{ output_list["report"] }}</h2>
+        </div>
     </div>
-<hr>
-{% for tactic in output_list["tactics"]%}
+    <hr>
+    {% for tactic in output_list["tactics"] %}
     <div class="container py-3">
-        <div class="row card ">
+        <div class="row card">
             <div class="card-header">
-                <h2>Tactic: {{tactic["name"]}} (ATT&CK ID: {{tactic["external_id"]}})</h2>
-              </div>
+                <h2>Tactic: {{ tactic["name"] }} (ATT&CK ID: {{ tactic["external_id"] }})</h2>
+            </div>
             <div class="card-body">
-                 <p>{{tactic["description"]}}</p>
-                 <p>(<a href= " {{tactic['url']}} ">{{tactic['url']}}</a>)</p>
-
-                 <p>{{tactic["techniques_intestation"]}}</p>
-                    {% set i = loop.index%}
-                  {% for technique in tactic["techniques"]%}
-                    <div class="container py-2">
-                        <div class="row card">
-                            <div class="card-header">
-                                <a class="collapsed d-block" data-bs-toggle="collapse" href="#collapse-{{loop.index}}-{{i}}" role="button" aria-expanded="false" aria-controls="#collapse-{{loop.index}}-{{i}}" style="text-decoration: none;font-size: 1.3em;">
-                                    <i class="fa fa-chevron-down pull-right"></i> Technique: {{technique["name"]}} (ATT&CK ID:  {{technique["external_id"]}})
-                                </a>
-                            </div>
-
-                            <div id="collapse-{{loop.index}}-{{i}}" class="collapse multi-collapse">
-                                <div class="card-body">
-                                    <a href="http://127.0.0.1:5000/techniques/{{technique['external_id']}}" style="color:blue;" class="py-2"> Open technique page</a>
-                                    <br>
-                                    <p>{{technique["description"]}}</p>
-                                    <p>{{technique["subtechniques_intestation"]}}</p>
-                                    {% for subtechnique in technique["subtechniques"]%}
-                                        <p style="font-weight:bold;">
-                                            Subtechnique: {{subtechnique["name"]}} (ATT&CK ID: {{subtechnique["external_id"]}}) <a href="http://127.0.0.1:5000/techniques/{{subtechnique['external_id']}}" style="font-weight:normal; color:blue;"> Open subtechnique page</a>
-                                        </p>
-                                    {% endfor %}
-                                </div>
+                <p>{{ tactic["description"] }}</p>
+                <p>(<a href="{{ tactic['url'] }}">{{ tactic['url'] }}</a>)</p>
+                <p>{{ tactic["techniques_intestation"] }}</p>
+                {% set i = loop.index %}
+                {% for technique in tactic["techniques"] %}
+                <div class="container py-2">
+                    <div class="row card">
+                        <div class="card-header">
+                            <a class="collapsed d-block" data-bs-toggle="collapse" href="#collapse-{{ loop.index }}-{{ i }}" role="button" aria-expanded="false" aria-controls="#collapse-{{ loop.index }}-{{ i }}" style="text-decoration: none;font-size: 1.3em;">
+                                <i class="fa fa-chevron-down pull-right"></i> Technique: {{ technique["name"] }} (ATT&CK ID: {{ technique["external_id"] }})
+                            </a>
+                        </div>
+                        <div id="collapse-{{ loop.index }}-{{ i }}" class="collapse multi-collapse">
+                            <div class="card-body">
+                                <a href="http://127.0.0.1:5000/techniques/{{ technique['external_id'] }}" style="color:blue;" class="py-2"> Open technique page</a>
+                                <br>
+                                <p>{{ technique["description"] }}</p>
+                                <p>{{ technique["subtechniques_intestation"] }}</p>
+                                {% for subtechnique in technique["subtechniques"] %}
+                                <p style="font-weight:bold;">
+                                    Subtechnique: {{ subtechnique["name"] }} (ATT&CK ID: {{ subtechnique["external_id"] }}) <a href="http://127.0.0.1:5000/techniques/{{ subtechnique['external_id'] }}" style="font-weight:normal; color:blue;"> Open subtechnique page</a>
+                                </p>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
-
-                  {% endfor %}
+                </div>
+                {% endfor %}
             </div>
-
-
         </div>
     </div>
-
-{% endfor %}
-
+    {% endfor %}
 </body>
 </html>

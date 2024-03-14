@@ -45,7 +45,10 @@ def get_technique_info(id):
     if technique.x_mitre_domains[0]== 'moblile-attack':
         subs = mitre_attack_mobile_data.get_subtechniques_of_technique(technique_stix_id)
     print(f"----------->stocontrollando len di sub: {len(subs)}")
-    if len(subs) >= 1:
+
+    if len(subs) == 1:
+        output_list["subtechniques_intestation"] = f"There is 1 subtechnique related to {technique.name} techinique:"
+    if len(subs) > 1:
         output_list["subtechniques_intestation"] = f"There are {len(subs)} subtechniques related to {technique.name} techinique:"
         for s in subs:
                 my_subtechnique = dict()
@@ -62,7 +65,10 @@ def get_technique_info(id):
                     my_subtechnique["external_id"] = mitre_attack_mobile_data.get_attack_id(sub.id)
 
                 my_subtechnique["description"] = sub.description
+                output_list["subtechniques"].sort(key=lambda x: x['external_id'], reverse=False)#ordino sottotecniche
                 output_list["subtechniques"].append(my_subtechnique)
+    else:
+        output_list["subtechniques_intestation"] = f"There are no subtechniques related to {technique.name} techinique."
 
     mitigations_of_technique = (
                     mitre_attack_enterprise_data.get_mitigations_mitigating_technique(technique_stix_id) +
@@ -70,7 +76,10 @@ def get_technique_info(id):
                     mitre_attack_mobile_data.get_mitigations_mitigating_technique(technique_stix_id)
             )
 
-    if len(mitigations_of_technique) >= 1:
+
+    if len(mitigations_of_technique) == 1:
+        output_list["mitigations_intestation"] = f"There is 1 mitigation mitigating {technique.name} technique:"
+    if len(mitigations_of_technique) > 1:
         output_list["mitigations_intestation"] = f"There are {len(mitigations_of_technique)} mitigations mitigating {technique.name} technique:"
         # popolo mitigazioni
         for mitigation in mitigations_of_technique:
@@ -82,6 +91,7 @@ def get_technique_info(id):
             output_list["mitigations"].append(my_mitigation)
     else:
         output_list["mitigations_intestation"] = f"There are no mitigations known mitigating {technique.name}."
+
     #gestione campagne
     output_list["campaigns"]=[]
     campaigns_enterprise_using_technique = mitre_attack_enterprise_data.get_campaigns_using_technique(technique_stix_id)
