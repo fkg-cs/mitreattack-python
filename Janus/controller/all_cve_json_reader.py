@@ -171,7 +171,7 @@ def calculate_average_baseScore(list_matching_cve):
 
     return round(avg_base_score, 2)#restituisco basescore arrotondato alla prima cifra decimale
 def calculate_average_attackComplexity(list_matching_cve):
-    complexity_values = {'LOW': 1, 'MEDIUM': 2, 'HIGH': 3}
+    complexity_values = {'LOW': 1, 'HIGH': 2 }
     total_complexity = 0
     count = 0
     for cve in list_matching_cve:
@@ -179,21 +179,19 @@ def calculate_average_attackComplexity(list_matching_cve):
         if complexity in complexity_values:
             total_complexity += complexity_values[complexity]
             count += 1
-
     if count == 0:
         return 'NONE'  # Se non ci sono valori validi, la media è 'NONE'
+
     average_complexity = total_complexity / count
     print(f"----------->media complessità attacco:{average_complexity}")
     # Determina la stringa corrispondente alla media calcolata
-    if average_complexity < 1.4:
+    if average_complexity < 1:
         return 'LOW'
-    elif average_complexity < 2:
-        return 'MEDIUM'
-    elif average_complexity < 2.9:
+    else:
         return 'HIGH'
 
 def calculate_average_confidentialityImpact(list_matching_cve):
-        confidentialityImpact_values = {'LOW': 1, 'MEDIUM': 2, 'HIGH': 3, 'CRITICAL': 4}
+        confidentialityImpact_values = {'NONE': 0, 'LOW': 1, 'HIGH': 2}
         total_confImpact = 0
         count = 0
         for cve in list_matching_cve:
@@ -207,17 +205,16 @@ def calculate_average_confidentialityImpact(list_matching_cve):
         average_confidentialityImpact = total_confImpact / count
         print(f"----------->media confidentiality impact :{average_confidentialityImpact}")
         # Determina la stringa corrispondente alla media calcolata
-        if average_confidentialityImpact < 1:
+        if average_confidentialityImpact == 0:
+            return 'NONE'
+        elif average_confidentialityImpact < 1:
             return 'LOW'
         elif average_confidentialityImpact < 2:
-            return 'MEDIUM'
-        elif average_confidentialityImpact < 3:
             return 'HIGH'
-        elif average_confidentialityImpact < 3.2:
-            return 'CRITICAL'
+
 
 def calculate_average_integrityImpact(list_matching_cve):
-    integrityImpact_values = {'LOW': 1, 'MEDIUM': 2, 'HIGH': 3, 'CRITICAL': 4}
+    integrityImpact_values = {'NONE': 0, 'LOW': 1, 'HIGH': 2}
     total_intImpact = 0
     count = 0
     for cve in list_matching_cve:
@@ -229,19 +226,17 @@ def calculate_average_integrityImpact(list_matching_cve):
     if count == 0:
         return 'NONE'  # Se non ci sono valori validi, la media è 'NONE'
     average_integrityImpact = total_intImpact / count
-    print(f"----------->media integrity impact :{average_integrityImpact}")
+    print(f"----------->media confidentiality impact :{average_integrityImpact}")
     # Determina la stringa corrispondente alla media calcolata
-    if average_integrityImpact < 1:
+    if average_integrityImpact == 0:
+        return 'NONE'
+    elif average_integrityImpact < 1:
         return 'LOW'
     elif average_integrityImpact < 2:
-        return 'MEDIUM'
-    elif average_integrityImpact < 3:
         return 'HIGH'
-    elif average_integrityImpact < 3.2:
-        return 'CRITICAL'
 
 def calculate_average_availabilityImpact(list_matching_cve):
-    availabilityImpact_values = {'LOW': 1, 'MEDIUM': 2, 'HIGH': 3, 'CRITICAL': 4}
+    availabilityImpact_values = {'NONE': 0, 'LOW': 1, 'HIGH': 2}
     total_avaImpact = 0
     count = 0
     for cve in list_matching_cve:
@@ -255,17 +250,15 @@ def calculate_average_availabilityImpact(list_matching_cve):
     average_availabilityImpact = total_avaImpact / count
     print(f"----------->media integrity impact :{average_availabilityImpact}")
     # Determina la stringa corrispondente alla media calcolata
-    if average_availabilityImpact < 1:
+    if average_availabilityImpact == 0:
+        return 'NONE'
+    elif average_availabilityImpact < 1:
         return 'LOW'
     elif average_availabilityImpact < 2:
-        return 'MEDIUM'
-    elif average_availabilityImpact < 3:
         return 'HIGH'
-    elif average_availabilityImpact < 3.2:
-        return 'CRITICAL'
 
 def calculate_average_privilegesRequired(list_matching_cve):
-    privilegesRequired_values = {'LOW': 1, 'MEDIUM': 2, 'HIGH': 3}
+    privilegesRequired_values = {'NONE': 0, 'LOW': 1, 'HIGH': 2}
     average_privilegesRequired = 0
     count = 0
     for cve in list_matching_cve:
@@ -279,37 +272,12 @@ def calculate_average_privilegesRequired(list_matching_cve):
     average_privilegesRequired = average_privilegesRequired / count
     print(f"----------->media privilegesRequired :{average_privilegesRequired}")
     # Determina la stringa corrispondente alla media calcolata
-    if average_privilegesRequired < 1.1:
+    if average_privilegesRequired == 0:
+        return 'NONE'
+    elif average_privilegesRequired < 1:
         return 'LOW'
-    elif average_privilegesRequired < 2.2:
-        return 'MEDIUM'
-    elif average_privilegesRequired < 3:
+    elif average_privilegesRequired < 2:
         return 'HIGH'
-    elif average_privilegesRequired < 3.5:
-        return 'ADMIN LIKE'
-def calculate_average_baseSeverity(list_matching_cve):
-    severity_values = {'NONE': 0, 'LOW': 1, 'MEDIUM': 2, 'HIGH': 3, 'CRITICAL': 4}
-    total_severity = 0
-    count = 0
-    for cve in list_matching_cve:
-        severity = cve['metrics']['baseSeverity']
-        if severity in severity_values:
-            total_severity  += severity_values[severity]
-            count += 1
-
-    if count == 0:
-        return 'NONE'  # Se non ci sono valori validi, la media è 'NONE'
-    average_severity= total_severity / count
-    print(f"----------->media base severity:{average_severity}")
-    # Determina la stringa corrispondente alla media calcolata
-    if average_severity< 1:
-        return 'LOW'
-    elif average_severity < 2.2:
-        return 'MEDIUM'
-    elif average_severity < 2.9:
-        return 'HIGH'
-    elif average_severity < 3.4:
-        return 'CRITICAL'
 
 
 def get_technique_risk_scores(techniqueKeyWord):
