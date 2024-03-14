@@ -1,3 +1,5 @@
+import pprint
+
 from mitreattack.stix20 import MitreAttackData
 
 def get_group_info(external_id):

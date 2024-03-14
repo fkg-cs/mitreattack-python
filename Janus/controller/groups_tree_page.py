@@ -56,12 +56,10 @@ def get_groups_list():
         group_element["alias_intestation"] = f"{group.name} has {len(group.aliases)} aliases."
         group_element["aliases"] = group.aliases
         mobile_groups.append(group_element)
-    output_list["mobile_groups"].append(mobile_groups)
+    output_list["mobile_groups"] = mobile_groups
 
-    print(
-        f"Retrieved {n_enterprise_groups + n_ics_groups + n_mobile_groups} ATT&CK groups: ENTERPRISE [{n_enterprise_groups}], ICS[{n_ics_groups}] , MOBILE [{n_mobile_groups}].")
-    output_list[
-        "report"] = f"Retrieved {n_enterprise_groups + n_ics_groups + n_mobile_groups} ATT&CK groups:  {n_enterprise_groups} operating in ENTERPRISE context , {n_ics_groups} operating in ICS context, {n_mobile_groups} operating in  MOBILE context."
+    print(f"Retrieved {n_enterprise_groups + n_ics_groups + n_mobile_groups} ATT&CK groups: ENTERPRISE [{n_enterprise_groups}], ICS[{n_ics_groups}] , MOBILE [{n_mobile_groups}].")
+    output_list["report"] = f"Retrieved {n_enterprise_groups + n_ics_groups + n_mobile_groups} ATT&CK groups:  {n_enterprise_groups} operating in ENTERPRISE context , {n_ics_groups} operating in ICS context, {n_mobile_groups} operating in  MOBILE context."
     pprint.pprint(output_list)
     return output_list
 

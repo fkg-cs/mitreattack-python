@@ -30,7 +30,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="janus-bg">
-
+<div id = "loading_indicator"> </div>
 <nav class="navbar sticky-top border-bottom navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <a class="navbar-brand" href="http://127.0.0.1:5000" style="color:#001049">JANUS</a>
@@ -57,7 +57,8 @@
       </div>
 </nav>
 
-<div class="container py-4">
+<div class="container">
+
     <div class="row">
         <div class="text-center">
             <h1>{{output_list["name"]}} (ATT&CK ID: {{output_list["external_id"]}})</h1>
@@ -68,124 +69,279 @@
              <p class="my-3">{{output_list["aliases"]}}</p>
         </div>
     </div>
+
+    <div class="row card my-3">
+        <div class="card-header">
+            Enterprise Campaigns attribuited to {{output_list["name"]}}
+        </div>
+        <div class="card-body">
+            <p class="py-1">{{output_list["enterprise_campaigns_intestation"]}}</p>
+
+            {% for campaign in output_list["enterprise_campaigns"]%}
+                <h4>{{campaign["name"]}} (ATT&CK ID: {{campaign["external_id"]}})</h4>
+                <p>{{campaign["description"]}}</p>
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <div class="row card my-3">
+        <div class="card-header">
+            ICS Campaigns attribuited to {{output_list["name"]}}
+        </div>
+        <div class="card-body">
+            <p class="py-1">{{output_list["ics_campaigns_intestation"]}}</p>
+
+            {% for campaign in output_list["ics_campaigns"]%}
+                <h4>{{campaign["name"]}} (ATT&CK ID: {{campaign["external_id"]}})</h4>
+                <p>{{campaign["description"]}}</p>
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <div class="row card my-3">
+        <div class="card-header">
+            Mobile Campaigns attribuited to {{output_list["name"]}}
+        </div>
+        <div class="card-body">
+            <p class="py-1">{{output_list["mobile_campaigns_intestation"]}}</p>
+
+            {% for campaign in output_list["mobile_campaigns"]%}
+                <h4>{{campaign["name"]}} (ATT&CK ID: {{campaign["external_id"]}})</h4>
+                <p>{{campaign["description"]}}</p>
+            {% endfor %}
+
+        </div>
+    </div>
+
+     {% set somma = output_list["n_enterprise_campaigns"]+output_list["n_ics_campaigns"]+output_list["n_mobile_campaigns"] %}
+     {% if  somma >= 1 %}
+    <div class="row card">
+        <div class="card-header">
+            Report campaigns performed by {{output_list["name"]}}
+        </div>
+        <div class="card-body">
+            <div class="d-flex justify-content-center align-items-center pb-5">
+                <canvas id="myPieChart" width="400" height="400" ></canvas>
+            </div>
+
+            <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                    var ctx = document.getElementById('myPieChart').getContext('2d');
+                    var myPieChart = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: ['ENTERPRISE campaigns', 'ICS campaigns', 'MOBILE campaigns'],
+                            datasets: [{
+                                label: 'by {{output_list["name"]}}',
+                                data: ['{{output_list["n_enterprise_campaigns"]}}', '{{output_list["n_ics_campaigns"]}}', '{{output_list["n_mobile_campaigns"]}}'],
+                                backgroundColor: [
+                                                'rgb(60,141,232)',
+                                                'rgba(255,251,0,0.66)',
+                                                'rgba(194,47,243,0.87)'
+                                            ],
+                                borderColor: [
+                                                'rgb(60,141,232)',
+                                                'rgba(255,251,0,0.66)',
+                                                'rgba(194,47,243,0.87)'
+                                            ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: false, // Imposta la dimensione del grafico
+                        }
+                    });
+                });
+            </script>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row card">
+        <div class="card-header">
+            Techniques used by {{output_list["name"]}}
+        </div>
+        <div class="card-body">
+            <div class="container">
+                <div class="row card">
+                <div class="card-header">
+                    <a class="collapsed d-block" data-bs-toggle="collapse" href="#collapse-en" role="button" aria-expanded="false" aria-controls="#collapse-en" style="text-decoration: none;font-size: 1.3em;">
+                        <i class="fa fa-chevron-down pull-right"></i> Enterprise techniques used by {{output_list["name"]}} </a>
+                    </a>
+                </div>
+
+                <div id="collapse-en" class="collapse multi-collapse">
+                    <div class="card-body">
+                        <p class="py-1">{{output_list["enterprise_techniques_intestation"]}}</p>
+                        {% for technique in output_list["enterprise_techniques"]%}
+                        <h4>{{technique["name"]}} (ATT&CK ID: {{technique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{technique['external_id']}}"> View details</a></h4>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+                <div class="row card">
+                    <div class="card-header">
+                        <a class="collapsed d-block" data-bs-toggle="collapse" href="#collapse-ics" role="button" aria-expanded="false" aria-controls="#collapse-ics" style="text-decoration: none;font-size: 1.3em;">
+                            <i class="fa fa-chevron-down pull-right"></i> ICS techniques used by {{output_list["name"]}} </a>
+                        </a>
+                    </div>
+
+                    <div id="collapse-ics" class="collapse multi-collapse">
+                        <div class="card-body">
+                            <p class="py-1">{{output_list["ics_techniques_intestation"]}}</p>
+                            {% for technique in output_list["ics_techniques"]%}
+                            <h4>{{technique["name"]}} (ATT&CK ID: {{technique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{technique['external_id']}}"> View details</a></h4>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row card">
+                    <div class="card-header">
+                        <a class="collapsed d-block" data-bs-toggle="collapse" href="#collapse-mobile" role="button" aria-expanded="false" aria-controls="#collapse-mobile" style="text-decoration: none;font-size: 1.3em;">
+                            <i class="fa fa-chevron-down pull-right"></i> Mobile techniques used by {{output_list["name"]}} </a>
+                        </a>
+                    </div>
+
+                    <div id="collapse-mobile" class="collapse multi-collapse">
+                        <div class="card-body">
+                            <p class="py-1">{{output_list["mobile_techniques_intestation"]}}</p>
+                            {% for technique in output_list["mobile_techniques"]%}
+                            <p>{{technique["name"]}} (ATT&CK ID: {{technique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{technique['external_id']}}"> View details</a></p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row card">
+        <div class="card-header">
+            Software used by {{output_list["name"]}}
+        </div>
+        <div class="card-body">
+            <div class="container">
+                <div class="row card">
+                    <div class="card-header">
+                        <a class="collapsed d-block" data-bs-toggle="collapse" href="#collapse-en-sw" role="button" aria-expanded="false" aria-controls="#collapse-en-sw" style="text-decoration: none;font-size: 1.3em;">
+                            <i class="fa fa-chevron-down pull-right"></i> Enterprise software used by {{output_list["name"]}} </a>
+                        </a>
+                    </div>
+
+                    <div id="collapse-en-sw" class="collapse multi-collapse">
+                        <div class="card-body">
+                            <p class="py-1">{{output_list["enterprise_software_intestation"]}}</p>
+                            {% for technique in output_list["enterprise_software"]%}
+                            <h4>{{technique["name"]}} (ATT&CK ID: {{technique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{technique['external_id']}}"> View details</a></h4>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row card">
+                    <div class="card-header">
+                        <a class="collapsed d-block" data-bs-toggle="collapse" href="#collapse-ics-sw" role="button" aria-expanded="false" aria-controls="#collapse-ics-sw" style="text-decoration: none;font-size: 1.3em;">
+                            <i class="fa fa-chevron-down pull-right"></i> ICS software used by {{output_list["name"]}} </a>
+                        </a>
+                    </div>
+
+                    <div id="collapse-ics-sw" class="collapse multi-collapse">
+                        <div class="card-body">
+                            <p class="py-1">{{output_list["ics_software_intestation"]}}</p>
+                            {% for technique in output_list["ics_software"]%}
+                            <h4>{{technique["name"]}} (ATT&CK ID: {{technique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{technique['external_id']}}"> View details</a></h4>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row card">
+                    <div class="card-header">
+                        <a class="collapsed d-block" data-bs-toggle="collapse" href="#collapse-mobile-sw" role="button" aria-expanded="false" aria-controls="#collapse-mobile-sw" style="text-decoration: none;font-size: 1.3em;">
+                            <i class="fa fa-chevron-down pull-right"></i> Mobile techniques used by {{output_list["name"]}} </a>
+                        </a>
+                    </div>
+
+                    <div id="collapse-mobile-sw" class="collapse multi-collapse">
+                        <div class="card-body">
+                            <p class="py-1">{{output_list["mobile_sw_intestation"]}}</p>
+                            {% for technique in output_list["mobile_sw"]%}
+                            <h4>{{technique["name"]}} (ATT&CK ID: {{technique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{technique['external_id']}}"> View details</a></h4>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row card">
+        <div class="card-header">
+            Assets targeted by {{output_list["name"]}}
+        </div>
+        <div class="card-body">
+            <div class="container">
+                <div class="row card">
+                    <div class="card-header">
+                        <a class="collapsed d-block" data-bs-toggle="collapse" href="#collapse-en-as" role="button" aria-expanded="false" aria-controls="#collapse-en-as" style="text-decoration: none;font-size: 1.3em;">
+                            <i class="fa fa-chevron-down pull-right"></i> Assets targeted in Enterprise context by {{output_list["name"]}}</a>
+                        </a>
+                    </div>
+
+                    <div id="collapse-en-as" class="collapse multi-collapse">
+                        <div class="card-body">
+                            <p class="py-1">{{output_list["enterprise_assets_intestation"]}}</p>
+                            {% for technique in output_list["enterprise_assets"]%}
+                            <h4>{{technique["name"]}} (ATT&CK ID: {{technique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{technique['external_id']}}"> View details</a></h4>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row card">
+                    <div class="card-header">
+                        <a class="collapsed d-block" data-bs-toggle="collapse" href="#collapse-ics-as" role="button" aria-expanded="false" aria-controls="#collapse-ics-as" style="text-decoration: none;font-size: 1.3em;">
+                            <i class="fa fa-chevron-down pull-right"></i> Assets targeted in ICS context by {{output_list["name"]}} </a>
+                        </a>
+                    </div>
+
+                    <div id="collapse-ics-as" class="collapse multi-collapse">
+                        <div class="card-body">
+                            <p class="py-1">{{output_list["ics_assets_intestation"]}}</p>
+                            {% for technique in output_list["ics_assets"]%}
+                            <h4>{{technique["name"]}} (ATT&CK ID: {{technique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{technique['external_id']}}"> View details</a></h4>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row card">
+                    <div class="card-header">
+                        <a class="collapsed d-block" data-bs-toggle="collapse" href="#collapse-mobile-as" role="button" aria-expanded="false" aria-controls="#collapse-mobile-as" style="text-decoration: none;font-size: 1.3em;">
+                            <i class="fa fa-chevron-down pull-right"></i> Assets targeted in mobile context by {{output_list["name"]}} </a>
+                        </a>
+                    </div>
+
+                    <div id="collapse-mobile-as" class="collapse multi-collapse">
+                        <div class="card-body">
+                            <p class="py-1">{{output_list["mobile_assets_intestation"]}}</p>
+                            {% for technique in output_list["mobile_assets"]%}
+                            <h4>{{technique["name"]}} (ATT&CK ID: {{technique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{technique['external_id']}}"> View details</a></h4>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
-   <h2>Enterprise Campaigns attribuited to {{output_list["name"]}}</h2>
-   <p2>{{output_list["enterprise_campaigns_intestation"]}}</p2>
-   {% for campaign in output_list["enterprise_campaigns"]%}
-        <h3>{{campaign["name"]}} (ATT&CK ID: {{campaign["external_id"]}})</h3>
-             <p3>{{campaign["description"]}}</p3>
-        {% endfor %}
-
- <h2>ICS Campaigns attribuited to {{output_list["name"]}}</h2>
-   <p2>{{output_list["ics_campaigns_intestation"]}}</p2>
-   {% for campaign in output_list["ics_campaigns"]%}
-        <h3>{{campaign["name"]}} (ATT&CK ID: {{campaign["external_id"]}})</h3>
-             <p3>{{campaign["description"]}}</p3>
-        {% endfor %}
-
- <h2>Mobile Campaigns attribuited to {{output_list["name"]}}</h2>
-   <p2>{{output_list["mobile_campaigns_intestation"]}}</p2>
-   {% for campaign in output_list["mobile_campaigns"]%}
-        <h3>{{campaign["name"]}} (ATT&CK ID: {{campaign["external_id"]}})</h3>
-             <p3>{{campaign["description"]}}</p3>
-        {% endfor %}
-
- {% set somma = output_list["n_enterprise_campaigns"]+output_list["n_ics_campaigns"]+output_list["n_mobile_campaigns"] %}
- {% if  somma >= 1 %}
-     <h2>Report campaigns performed by {{output_list["name"]}}</h2>
-     <canvas id="myPieChart" width="400" height="400"></canvas>
-     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        var ctx = document.getElementById('myPieChart').getContext('2d');
-        var myPieChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['ENTERPRISE campaigns', 'ICS campaigns', 'MOBILE campaigns'],
-                datasets: [{
-                    label: 'by {{output_list["name"]}}',
-                    data: ['{{output_list["n_enterprise_campaigns"]}}', '{{output_list["n_ics_campaigns"]}}', '{{output_list["n_mobile_campaigns"]}}'],
-                    backgroundColor: [
-                                    'rgb(60,141,232)',
-                                    'rgba(255,251,0,0.66)',
-                                    'rgba(194,47,243,0.87)'
-                                ],
-                    borderColor: [
-                                    'rgb(60,141,232)',
-                                    'rgba(255,251,0,0.66)',
-                                    'rgba(194,47,243,0.87)'
-                                ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: false, // Imposta la dimensione del grafico
-            }
-        });
-    });
-</script>
-{% endif %}
-<script>
-        window.addEventListener("load", function () {
-            var loader = document.getElementById("loader-wrapper");
-            loader.style.display = "none"; // Nasconde l'animazione una volta caricata la pagina
-        });
-    </script>
- <h1>Techniques used by {{output_list["name"]}}</h1>
-<h2>Enterprise techniques used by {{output_list["name"]}}</h2>
-   <p2>{{output_list["enterprise_techniques_intestation"]}}</p2>
-   {% for technique in output_list["enterprise_techniques"]%}
-        <h4>{{technique["name"]}} (ATT&CK ID: {{technique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{technique['external_id']}}"> View details</a></h4>
-        {% endfor %}
-<h2>ICS techniques used by {{output_list["name"]}}</h2>
-   <p2>{{output_list["ics_techniques_intestation"]}}</p2>
-   {% for technique in output_list["ics_techniques"]%}
-        <h3>{{technique["name"]}} (ATT&CK ID: {{technique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{technique['external_id']}}"> View details</a></h3>
-             <p3>{{technique["description"]}}</p3>
-        {% endfor %}
-<h2>Mobile techniques used by {{output_list["name"]}}</h2>
-   <p2>{{output_list["mobile_techniques_intestation"]}}</p2>
-   {% for technique in output_list["mobile_techniques"]%}
-        <h3>{{technique["name"]}} (ATT&CK ID: {{technique["external_id"]}})<a href="http://127.0.0.1:5000/techniques/{{technique['external_id']}}"> View details</a></h3>
-             <p3>{{technique["description"]}}</p3>
-        {% endfor %}
-<h1>Software used by {{output_list["name"]}}</h1>
-<h2>Software used in Enterprise context by {{output_list["name"]}}</h2>
-   <p2>{{output_list["enterprise_software_intestation"]}}</p2>
-   {% for software in output_list["enterprise_software"]%}
-        <h3>{{software["name"]}} (ATT&CK ID: {{software["external_id"]}})</h3>
-             <p3>{{software["description"]}}</p3>
-        {% endfor %}
-<h2>Software used in ICS context by {{output_list["name"]}}</h2>
-   <p2>{{output_list["ics_software_intestation"]}}</p2>
-   {% for software in output_list["ics_software"]%}
-        <h3>{{software["name"]}} (ATT&CK ID: {{software["external_id"]}})</h3>
-             <p3>{{software["description"]}}</p3>
-        {% endfor %}
-<h2>Software used in Mobile context by {{output_list["name"]}}</h2>
-   <p2>{{output_list["mobile_software_intestation"]}}</p2>
-   {% for software in output_list["mobile_software"]%}
-        <h3>{{software["name"]}} (ATT&CK ID: {{software["external_id"]}})</h3>
-             <p3>{{software["description"]}}</p3>
-        {% endfor %}
-
-<h2>Assets targeted in Enterprise context by {{output_list["name"]}}</h2>
-   <p2>{{output_list["enterprise_assets_intestation"]}}</p2>
-   {% for asset in output_list["enterprise_assets"]%}
-        <h3>{{asset["name"]}} (ATT&CK ID: {{asset["external_id"]}})</h3>
-             <p3>{{asset["description"]}}</p3>
-        {% endfor %}
-<h2>Assets targeted in ICS context by {{output_list["name"]}}</h2>
-   <p2>{{output_list["ics_assets_intestation"]}}</p2>
-   {% for asset in output_list["ics_assets"]%}
-        <h3>{{asset["name"]}} (ATT&CK ID: {{asset["external_id"]}})</h3>
-             <p3>{{asset["description"]}}</p3>
-        {% endfor %}
-<h2>Assets targeted in mobile context by {{output_list["name"]}}</h2>
-   <p2>{{output_list["mobile_assets_intestation"]}}</p2>
-   {% for asset in output_list["mobile_assets"]%}
-        <h3>{{asset["name"]}} (ATT&CK ID: {{asset["external_id"]}})</h3>
-             <p3>{{asset["description"]}}</p3>
-        {% endfor %}
 </body>
+
 </html>
