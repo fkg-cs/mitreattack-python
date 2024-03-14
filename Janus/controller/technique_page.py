@@ -1,6 +1,6 @@
 import pprint
 
-from Janus.controller.all_cve_json_reader import get_technique_risk_scores
+from Janus.controller.cve_json_reader import get_technique_risk_scores
 from mitreattack.stix20 import MitreAttackData
 
 def get_technique_info(id):

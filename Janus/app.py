@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for
 
 from Janus.controller.group_page import get_group_info
-from Janus.controller.groups_tree_page import get_groups_list
+from Janus.controller.CTI_groups_page import get_groups_list
 from Janus.controller.matrix_enterprise_page import get_enterprise_matrix
 from Janus.controller.matrix_ics_page import get_ics_matrix
 from Janus.controller.matrix_mobile_page import get_mobile_matrix
