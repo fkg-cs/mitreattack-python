@@ -94,9 +94,9 @@
                                 <p>{{ technique["description"] }}</p>
                                 <p>{{ technique["subtechniques_intestation"] }}</p>
                                 {% for subtechnique in technique["subtechniques"] %}
-                                <p style="font-weight:bold;">
+                                <h5>
                                     Subtechnique: {{ subtechnique["name"] }} (ATT&CK ID: {{ subtechnique["external_id"] }}) <a href="http://127.0.0.1:5000/techniques/{{ subtechnique['external_id'] }}" style="font-weight:normal; color:blue;"> Open subtechnique page</a>
-                                </p>
+                                </h5>
                                 {% endfor %}
                             </div>
                         </div>
