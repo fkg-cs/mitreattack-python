@@ -70,3 +70,6 @@ color:#001049;
 .card-header .collapsed .fa {
   transform: rotate(90deg);
 }
+ .h1-janus {
+        font-size: 5em;
+    }
