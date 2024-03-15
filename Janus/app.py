@@ -7,7 +7,7 @@ from Janus.controller.matrix_ics_page_controller import index_ics_matrix
 from Janus.controller.matrix_mobile_page_controller import index_mobile_matrix
 from Janus.controller.technique_page_controller import index_technique_info
 
-app = Flask(__name__, static_folder=r'..\Janus\static',template_folder=r'..\Janus\view')
+app = Flask(__name__, static_folder=r'..\Janus\static',template_folder=r'..\Janus\viewing')
 @app.route('/')
 def home_page():
     return render_template("home.html")
