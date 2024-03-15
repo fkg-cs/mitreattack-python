@@ -2,7 +2,7 @@ import pprint
 
 from mitreattack.stix20 import MitreAttackData
 
-def get_group_info(external_id):
+def index_group_info(external_id):
     output_list = dict()
     mitre_attack_enterprise_data = MitreAttackData(
         r"../Janus/json/json_matrix/enterprise-attack.json")
@@ -237,4 +237,4 @@ def get_group_info(external_id):
     return output_list
 
 if __name__ == "__main__":
-    get_group_info("G1015")
+    index_group_info("G1015")

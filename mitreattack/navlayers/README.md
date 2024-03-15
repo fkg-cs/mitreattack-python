@@ -227,13 +227,13 @@ from mitreattack.navlayers import ToExcel
 
 lay = Layer()
 lay.from_file("path/to/layer/file.json")
-# Using taxii server for templates
+# Using taxii server for view
 t = ToExcel(domain=lay.layer.domain, source='taxii')
 t.to_xlsx(layerInit=lay, filepath="demo.xlsx")
-# Using local stix data for templates
+# Using local stix data for view
 t2 = ToExcel(domain='mobile', source='local', resource='path/to/local/stix.json')
 t2.to_xlsx(layerInit=lay, filepath="demo2.xlsx")
-# Using remote ATT&CK Workbench instance for templates
+# Using remote ATT&CK Workbench instance for view
 workbench_url = 'localhost:3000'
 t3 = ToExcel(domain='ics', source='remote', resource=workbench_url)
 ```
@@ -314,10 +314,10 @@ from mitreattack.navlayers import ToSvg, SVGConfig
 
 lay = Layer()
 lay.from_file("path/to/layer/file.json")
-# Using taxii server for templates
+# Using taxii server for view
 t = ToSvg(domain=lay.layer.domain, source='taxii')
 t.to_svg(layerInit=lay, filepath="demo.svg")
-#Using local stix data for templates
+#Using local stix data for view
 
 conf = SVGConfig()
 conf.load_from_file(filename="path/to/poster/config.json")

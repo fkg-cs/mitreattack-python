@@ -7,7 +7,7 @@ from mitreattack.navlayers.exporters.matrix_gen import MatrixGen
 
 
 class BadTemplateException(Exception):
-    """Custom exception used when bad templates are found."""
+    """Custom exception used when bad view are found."""
 
     pass
 
@@ -108,7 +108,7 @@ class ExcelTemplates:
         return wb
 
     def export(self, showName, showID, filters=None, sort=0, scores=[], subtechs=[], exclude=[]):
-        """Export a raw customized excel templates.
+        """Export a raw customized excel view.
 
         :param showName: Whether or not to display names for each entry
         :param showID: Whether or not to display Technique IDs for each entry

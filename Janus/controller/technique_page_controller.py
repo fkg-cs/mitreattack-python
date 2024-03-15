@@ -1,9 +1,9 @@
 import pprint
 
-from Janus.controller.cve_json_reader import get_technique_risk_scores
+from Janus.controller.cve_json_scaper_controller import get_technique_risk_scores
 from mitreattack.stix20 import MitreAttackData
 
-def get_technique_info(id):
+def index_technique_info(id):
     output_list = dict()
     n_subtechniques = 0
     mitre_attack_enterprise_data = MitreAttackData(r"../Janus/json/json_matrix/enterprise-attack.json")
@@ -117,4 +117,4 @@ def get_technique_info(id):
     return output_list
 
 if __name__ == "__main__":
-    get_technique_info("T1474")
+    index_technique_info("T1474")

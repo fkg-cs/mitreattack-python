@@ -16,7 +16,7 @@ from mitreattack.navlayers.core.filter import Filter
 
 
 class BadTemplateException(Exception):
-    """Custom exception used when bad templates are found."""
+    """Custom exception used when bad view are found."""
 
     pass
 

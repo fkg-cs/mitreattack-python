@@ -2,7 +2,7 @@ import pprint
 from mitreattack.stix20 import MitreAttackData
 
 
-def get_mobile_matrix():
+def index_mobile_matrix():
     n_tactics = 0
     n_techniques = 0
     n_subtechniques = 0
@@ -67,4 +67,4 @@ def get_mobile_matrix():
 
 
 if __name__ == "__main__":
-    get_mobile_matrix()
+    index_mobile_matrix()

@@ -3,7 +3,7 @@ import pprint
 from mitreattack.stix20 import MitreAttackData
 
 
-def get_groups_list():
+def index_CTI_groups():
     output_list = dict()
     n_enterprise_groups = 0
     n_ics_groups = 0
@@ -65,4 +65,4 @@ def get_groups_list():
 
 
 if __name__ == "__main__":
-    get_groups_list()
+    index_CTI_groups()

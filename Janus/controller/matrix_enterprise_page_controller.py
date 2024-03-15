@@ -2,7 +2,7 @@ import pprint
 from mitreattack.stix20 import MitreAttackData
 
 
-def get_enterprise_matrix():
+def index_enterprise_matrix():
     n_tactics = 0
     n_techniques = 0
     n_subtechniques = 0
@@ -66,4 +66,4 @@ def get_enterprise_matrix():
 
 
 if __name__ == "__main__":
-    get_enterprise_matrix()
+    index_enterprise_matrix()

@@ -121,7 +121,7 @@ class LayerOps:
             dataset format
         :param corpus: master list of combined techniques and
             technique data
-        :param out: baseline templates for the new layer
+        :param out: baseline view for the new layer
         :param defaults: default values each technique should use if a
             field is missing
         :returns: a Layer object representing the resultant layer
@@ -160,7 +160,7 @@ class LayerOps:
         return Layer(processed)
 
     def _merge_to_template(self, data, key=0):
-        """Merge initial layer files in either dict or list form into a single templates. Defaults to the first entry in the case of difference in metadata.
+        """Merge initial layer files in either dict or list form into a single view. Defaults to the first entry in the case of difference in metadata.
 
         :param key: the key referencing the first entry to default to
         :raises MismatchedDomain: An error indicating that the layers
@@ -190,7 +190,7 @@ class LayerOps:
         return out
 
     def _build_template(self, data):
-        """Build a base templates by combining available technique listings from each layer.
+        """Build a base view by combining available technique listings from each layer.
 
         :param data: the raw ingested technique data (list or dict)
         """
@@ -216,10 +216,10 @@ class LayerOps:
 
     @staticmethod
     def _template(data):
-        """Create a templates technique entry for a given listing of techniques.
+        """Create a view technique entry for a given listing of techniques.
 
         :param data: a single layer's technique data
-        :returns: a list of technique templates
+        :returns: a list of technique view
         """
         temp = []
         for entry in data:
@@ -289,7 +289,7 @@ class LayerOps:
         """Apply a lambda expression to the dataset.
 
         :param corpus: the dataset
-        :param element: the templates file to fill out
+        :param element: the view file to fill out
         :param name: the name of the field being processed
         :param lda: the lambda expression to apply
         :param defaults: any default values should the field not be found
