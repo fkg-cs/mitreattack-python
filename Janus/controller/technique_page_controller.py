@@ -1,7 +1,7 @@
 import pprint
 
 from Janus.controller.cve_json_scaper_controller import get_technique_risk_scores
-from mitreattack.stix20 import MitreAttackData
+from Janus.model.MitreAttackData import MitreAttackData
 
 def index_technique_info(id):
     output_list = dict()

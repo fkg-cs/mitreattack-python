@@ -1,5 +1,5 @@
 import pprint
-from mitreattack.stix20 import MitreAttackData
+from Janus.model.MitreAttackData import MitreAttackData
 
 
 def index_ics_matrix():
