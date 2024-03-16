@@ -116,5 +116,6 @@ def index_technique_info(id):
     pprint.pprint(output_list)
     return output_list
 
+
 if __name__ == "__main__":
     index_technique_info("T1474")

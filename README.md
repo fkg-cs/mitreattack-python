@@ -31,7 +31,6 @@ It is very helpful for future development in MitreAttackData Library and serve a
 This directory contains all the json files that the project needs, such as: json_matrix that contins ATT&CK matixes information and json_CVE that contains a year by year archive divided by its identification number.
 
 
-
 ### CTI
 
 [Cyber Threat Intelligence repository](https://github.com/mitre/cti) of the ATT&CK catalog expressed in STIX 2.0 JSON.
