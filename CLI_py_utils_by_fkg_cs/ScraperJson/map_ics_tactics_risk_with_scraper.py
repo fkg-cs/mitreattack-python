@@ -230,11 +230,11 @@ def get_enterprise_techniques_risk_scores():
 
     output_file_path=r"..\CLI_py_utils_by_fkg_cs\Scraper Json\mapping_results"
 
-    mitre_attack_data = MitreAttackData("../../Janus/json/json_matrix/enterprise-attack.json")
+    mitre_attack_data = MitreAttackData("../../Janus/json/json_matrix/ics-attack.json")
     techniques = mitre_attack_data.get_techniques(remove_revoked_deprecated=True)
 
-    print("----------Scraping CVSS3.1 metrics for all Enterprise techniques------------")
-    print(f"Saving score mapping_results of techniques in: {output_file_path}")
+    print("----------Scraping CVSS3.1 metrics for all ICS techniques------------")
+    print(f"Saving score mapping results of techniques in: {output_file_path}")
 
     #format of csv is Technique ATT&CK ID, [risk_score dictionary],'matchingCveIds': ['CVE-2024-0007',....., 'CVE-2024-0008'] list of cve ids matching
     output_string = "TECHNIQUE ATT&CK ID, CONGLOMERATE CVSS 3.1 RISK SCORES FROM CVE SCRAPING, LIST OF CVE ID MATCHING TECHNIQUE\n"
@@ -246,7 +246,7 @@ def get_enterprise_techniques_risk_scores():
 
 
     #scrivo su file
-    with open('mapping_results\enterprise_techniques_riskscores_mapping.txt', 'w') as file:
+    with open('mapping_results\ics_techniques_riskscores_mapping.txt', 'w') as file:
         # Scriviamo la stringa nel file
         file.write(f'{output_string}')
     print("------------------------DONE SCRAPING-------------------------------")
