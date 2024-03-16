@@ -1,4 +1,4 @@
-from mitreattack.stix20 import MitreAttackData
+from mitreattack.stix20.MitreAttackData import MitreAttackData
 import pprint
 
 
