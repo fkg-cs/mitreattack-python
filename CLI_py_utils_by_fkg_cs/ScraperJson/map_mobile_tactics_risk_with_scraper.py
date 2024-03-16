@@ -152,11 +152,12 @@ def calculate_average_privilegesRequired(list_matching_cve):
 
 
 #metodo principale richiamato dalla vista sulle parole chiave della tecnica
-def get_technique_risk_scores(techniqueKeyWord):
+def get_technique_risk_scores(techniqueKeyWords):
+    commonWords=["the","of","is","an","and","a","to","with","not","or","while","this","that","on","does","do","by","in","more"]
     risk_score=dict()
     n_cves=0
     n_cves_with_metrics_and_match=0
-    techniqueKeyWord = sanitize_keyWords(techniqueKeyWord)  # elaboro le keyword e tolgo eventuali caratteri problematici
+    techniqueKeyWords = sanitize_keyWords(techniqueKeyWords)  # elaboro le keyword e tolgo eventuali caratteri problematici
 
     print(f"--> RETRIVING INFORMATION OF All CVEs FROM dir  <--\n")
     list_all_cves_datas= get_list_of_CVEs_from_dir(r"../../Janus/json/json_CVE")#ottengo lista con i dati di TUTTI i cve presenti nella cartella json
@@ -169,13 +170,13 @@ def get_technique_risk_scores(techniqueKeyWord):
         if cve_data.has_metrics():#solo se ha le metriche che mi servono controllo la descrizione
            cve_data_description = cve_data.get_description()
 
-           for word in techniqueKeyWord.split():# controllo se la descrizione della tecnica sudivisa in parole chiave ha corrispondenza con la descrizione della cve
-               if len(word) >= 4 and ( word in cve_data_description or word.lower() in cve_data_description or word.upper() in cve_data_description) or ( techniqueKeyWord.lower() in cve_data_description or techniqueKeyWord.upper() in cve_data_description ):
+           for word in techniqueKeyWords.split():# controllo se la descrizione della tecnica sudivisa in parole chiave ha corrispondenza con la descrizione della cve
+               if word not in commonWords and (word.lower in wordDescription.lower() for wordDescription in cve_data_description):
                    if not is_cve_id_present(cve_data.get_cveId(), list_cves_matching_keyword): #faccio append solo se non l'ho gia inserito nella lista
                        n_cves_with_metrics_and_match += 1
                        cve_matching_keyword=dict()#dizionario contenente informazioni su singolo cve con corrispondenze su parole chiave
                        #stampe a video per CL
-                       print(f"--> CVE ID with metrics and keywords ('{techniqueKeyWord}')->('{word}')  in description: {cve_data.get_cveId()} ")
+                       print(f"--> CVE ID with metrics and keywords ('{techniqueKeyWords}')->('{word}')  in description: {cve_data.get_cveId()} ")
                        print(f"--> CVE description: {cve_data.get_description()}")
                        print(f"--> CVE METRICS: ")
                        print(f"                BASE SCORE: [{cve_data.get_cvss_baseScore()}] ")
@@ -221,7 +222,7 @@ def get_technique_risk_scores(techniqueKeyWord):
     risk_score['integrityImpact'] = calculate_average_integrityImpact(list_cves_matching_keyword)
     risk_score['availabilityImpact'] = calculate_average_availabilityImpact(list_cves_matching_keyword)
     risk_score['privilegesRequired'] = calculate_average_privilegesRequired(list_cves_matching_keyword)
-    risk_score['matchingCveIds'] = [cve["cve_id"] for cve in list_cves_matching_keyword]
+    #risk_score['matchingCveIds'] = [cve["cve_id"] for cve in list_cves_matching_keyword]#returns a list of related cve
 
     return risk_score
 
