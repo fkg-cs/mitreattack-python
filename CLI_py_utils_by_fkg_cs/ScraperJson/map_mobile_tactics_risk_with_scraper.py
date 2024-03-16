@@ -241,7 +241,7 @@ def get_enterprise_techniques_risk_scores():
     for technique in techniques:
         external_id=mitre_attack_data.get_attack_id(technique.id)
 
-        risk_scores=get_technique_risk_scores(technique.name+" "+technique.description)
+        risk_scores=get_technique_risk_scores(technique.name)#+" "+technique.description
         output_string+=f"{external_id}, {risk_scores}, \n"
 
 
