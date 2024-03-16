@@ -168,17 +168,17 @@ def get_technique_risk_scores(techniqueKeyWords):
     for cve_data in list_all_cves_datas:
         n_cves+=1
         #itero su tutti i file json convertiti in lista di cve_data e controllo quali hanno tutte le metriche che mi servono
-        if cve_data.has_metrics():#solo se ha le metriche che mi servono controllo la descrizione
+        if cve_data.has_metrics() and (cve_data.get_cveMetadata()["state"]=='PUBLISHED'):#solo se ha le metriche che mi servono controllo la descrizione e se è un cve attivo
            cve_data_description = cve_data.get_description()
 
            for word in techniqueKeyWords.split():# controllo se la descrizione della tecnica sudivisa in parole chiave ha corrispondenza con la descrizione della cve
-               if word not in commonWords and ( word.lower in wordDescription.lower() for wordDescription in cve_data_description ):
+               if word not in commonWords and (word.lower() in cve_data_description.lower().split()):
                    if not is_cve_id_present(cve_data.get_cveId(), list_cves_matching_keyword): #faccio append solo se non l'ho gia inserito nella lista
                        n_cves_with_metrics_and_match += 1
                        cve_matching_keyword=dict()#dizionario contenente informazioni su singolo cve con corrispondenze su parole chiave
                        #stampe a video per CL
                        print(f"--> CVE ID with metrics and keywords ('{techniqueKeyWords}')->('{word}')  in description: {cve_data.get_cveId()} ")
-                       print(f"--> CVE description: {cve_data.get_description()}")
+                       print(f"--> CVE description: {cve_data_description}")
                        print(f"--> CVE METRICS: ")
                        print(f"                BASE SCORE: [{cve_data.get_cvss_baseScore()}] ")
                        print(f"                ATTACK COMPLEXITY: {cve_data.get_cvss_attackComplexity()} ")

@@ -172,7 +172,7 @@ def get_technique_risk_scores(techniqueKeyWords):
            cve_data_description = cve_data.get_description()
 
            for word in techniqueKeyWords.split():# controllo se la descrizione della tecnica sudivisa in parole chiave ha corrispondenza con la descrizione della cve
-               if  word not in commonWords and ( word in cve_data_description or word.lower() in cve_data_description or word.upper() in cve_data_description) or (techniqueKeyWords.lower() in cve_data_description or techniqueKeyWords.upper() in cve_data_description):
+               if word not in commonWords and (word.lower() in cve_data_description.lower().split()):
                    if not is_cve_id_present(cve_data.get_cveId(), list_cves_matching_keyword): #faccio append solo se non l'ho gia inserito nella lista
                        n_cves_with_metrics_and_match += 1
                        cve_matching_keyword=dict()#dizionario contenente informazioni su singolo cve con corrispondenze su parole chiave
