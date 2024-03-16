@@ -24,7 +24,7 @@ def index_technique_info(id):
     output_list["description"] = technique.description
     output_list["platforms"] = technique.x_mitre_platforms
     output_list["creation_date"] = f"{technique.created}"[:10]#ottengo solo mese-giorno-anno e taglio timestamp
-    output_list["risk_scores"] = get_technique_risk_scores(technique.name+' '+technique.description)
+    output_list["risk_scores"] = get_technique_risk_scores(technique.name)#+' '+technique.description
     technique_stix_id=technique.id
 
     if hasattr(technique, 'x_mitre_detection'):
@@ -44,7 +44,7 @@ def index_technique_info(id):
         subs = mitre_attack_ics_data.get_subtechniques_of_technique(technique_stix_id)
     if technique.x_mitre_domains[0]== 'moblile-attack':
         subs = mitre_attack_mobile_data.get_subtechniques_of_technique(technique_stix_id)
-    print(f"----------->stocontrollando len di sub: {len(subs)}")
+    #print(f"----------->stocontrollando len di sub: {len(subs)}")
 
     if len(subs) == 1:
         output_list["subtechniques_intestation"] = f"There is 1 subtechnique related to {technique.name} techinique:"
