@@ -234,14 +234,31 @@ def get_enterprise_techniques_risk_scores():
     print("----------Scraping CVSS3.1 metrics for all ICS techniques------------")
     print(f"Saving score mapping results of techniques in: {output_file_path}")
 
+    min_score = 99  # set to higher value than scale so at first iteration the first score is set as minimum
+    max_score = 0
+    n_scores = 0
+    sumof_scores = 0
+    average_score = 0
+
     #format of csv is Technique ATT&CK ID, [risk_score dictionary],'matchingCveIds': ['CVE-2024-0007',....., 'CVE-2024-0008'] list of cve ids matching
     output_string = "TECHNIQUE ATT&CK ID, CONGLOMERATE CVSS 3.1 RISK SCORES FROM CVE SCRAPING, LIST OF CVE ID MATCHING TECHNIQUE\n"
     for technique in techniques:
-        external_id=mitre_attack_data.get_attack_id(technique.id)
+        n_scores = n_scores + 1
 
-        risk_scores=get_technique_risk_scores(technique.name)#+" "+technique.description
-        output_string+=f"{external_id}, {risk_scores}, \n"
+        external_id = mitre_attack_data.get_attack_id(technique.id)
+        risk_scores = get_technique_risk_scores(technique.name)  # +" "+technique.description
 
+        if risk_scores["baseScore"] == 0:
+            risk_scores = get_technique_risk_scores(technique.name + " " + technique.description)  # perform search with more keywords
+
+        score = risk_scores['baseScore']
+        sumof_scores = sumof_scores + score
+
+        if score < min_score:
+            min_score = score
+        if score > max_score:
+            max_score = score
+        output_string += f"{external_id},{risk_scores}\n"
 
     #scrivo su file
     with open('mapping_results\ics_techniques_riskscores_mapping.txt', 'w') as file:
