@@ -1,6 +1,7 @@
 # mitreattack-python
 
-This repository contains a library of Python tools and utilities for working with ATT&CK data. For more information,
+This repository contains a set of Python tools and utilities for working with ATT&CK data.
+For more information,
 see the [full documentation](https://mitreattack-python.readthedocs.io/) on ReadTheDocs.
 
 ## Install
@@ -21,15 +22,23 @@ you can read more about other modules in this library under "Additional Modules"
 
 ## fkg-cs directory 
 
-This directory contains all MitreAttackData Library, wich is the base library for the ATT&CK data manipulation in python and the main core of this project:
+This directory contains all the work done by FKG, wich is a CTI system that operates with the ATT&CK data manipulation in python and the main core of Janus project:
 
 ### CLI_py_utils
 This directory contains many python file function with CLI that helps to replicare ATT&CK navigator with python objects.
+It also contains a base scraper in ScraperJson directory that manages the risk for each technique based on CVSS 3.1 base metrics.
+In directory mapping_results you can find the output files of the risck scraping for each domain.
+The format of the CSV file is: ATT&CK ID, {risk scores obtained from scraping}, [list of CVE-ID that matched the technique]
+
 It is very helpful for future development in MitreAttackData Library and serve as a guideline for programmers that need to integrate python data manituplation of MITRE MATRIXES.
+
+### Janus directory 
+This directory contains a web system that shows all the data of mitre, data manipulation in python and risk scores in a more accessible way.
+The app.py file runs the Flask server to view the page at: http://127.0.0.1:5000
+Once you start the server you can use the website on your browser.
 
 ### json directory
 This directory contains all the json files that the project needs, such as: json_matrix that contins ATT&CK matixes information and json_CVE that contains a year by year archive divided by its identification number.
-
 
 ### CTI
 
