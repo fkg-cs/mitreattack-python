@@ -264,7 +264,7 @@ def get_enterprise_techniques_risk_scores():
         output_string += f"{external_id},{risk_scores}\n"
 
     #scrivo su file
-    with open('mapping_results\enterprise_techniques_riskscores_mapping.txt', 'w') as file:
+    with open('mapping_results\enterprise_techniques_riskscores_mapping.csv', 'w') as file:
         # Scriviamo la stringa nel file
         file.write(f'{output_string}')
     print("------------------------DONE SCRAPING-------------------------------")

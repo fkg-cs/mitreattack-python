@@ -62,6 +62,7 @@ def index_enterprise_matrix():
         output_list["tactics"].append(my_tactic)
 
     output_list["report"] = f"RETRIVED: {n_tactics} TACTICS , {n_techniques} TECHNIQUES , {n_subtechniques} SUBTECHNIQUES."
+    output_list["mapping_download_link"]='..\..\..\CLI_py_utils_by_fkg_cs/ScraperJson/mapping_results/enterprise_techniques_riskscores_mapping.csv'
     return output_list
 
 
