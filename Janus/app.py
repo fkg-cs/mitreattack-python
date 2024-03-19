@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, send_file
 
 from Janus.controller.group_page_controller import index_group_info
 from Janus.controller.CTI_groups_page_controller import index_CTI_groups
@@ -35,5 +35,7 @@ def tree_groups():
 @app.route('/CTI_groups/<id>', methods=['GET'])
 def group_details(id):
     return render_template("group_page.html", output_list=index_group_info(id))
+
+
 if __name__ == "__main__":
     app.run()
