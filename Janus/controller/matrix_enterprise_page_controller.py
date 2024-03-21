@@ -61,7 +61,7 @@ def index_enterprise_matrix():
 
         output_list["tactics"].append(my_tactic)
 
-    output_list["git_link"] = 'https://github.com/fkg-cs/mitreattack-python/blob/master/CLI_py_utils_by_fkg_cs/ScraperJson/mapping_results/enterprise_techniques_riskscores_mapping.csv'
+    output_list["git_link"] = 'https://github.com/fkg-cs/mitreattack-python/blob/master/CLI_python_utils_for_MitreAttackData_fkg_cs/ScraperJson/mapping_results/enterprise_techniques_riskscores_mapping.csv'
     output_list["report"] = f"RETRIVED: {n_tactics} TACTICS , {n_techniques} TECHNIQUES , {n_subtechniques} SUBTECHNIQUES."
     return output_list
 

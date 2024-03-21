@@ -1,5 +1,6 @@
 from mitreattack.stix20.MitreAttackData import MitreAttackData
 import os
+import matplotlib.pyplot as plt
 from Janus.model.CveData import CveData
 
 
@@ -239,6 +240,7 @@ def get_enterprise_techniques_risk_scores():
     n_scores = 0
     sumof_scores = 0
     average_score = 0
+    scores=[]
 
     #format of csv is Technique ATT&CK ID, [risk_score dictionary],'matchingCveIds': ['CVE-2024-0007',....., 'CVE-2024-0008'] list of cve ids matching
     output_string = "TECHNIQUE ATT&CK ID, CONGLOMERATE CVSS 3.1 RISK SCORES FROM CVE SCRAPING, LIST OF CVE ID MATCHING TECHNIQUE\n"
@@ -254,11 +256,13 @@ def get_enterprise_techniques_risk_scores():
         score = risk_scores['baseScore']
         sumof_scores = sumof_scores + score
 
+
         if score < min_score:
             min_score = score
         if score > max_score:
             max_score = score
         output_string += f"{external_id},{risk_scores}\n"
+        scores.append(risk_scores['baseScore'])
 
     #scrivo su file
     with open('mapping_results\ics_techniques_riskscores_mapping.csv', 'w') as file:
@@ -268,7 +272,22 @@ def get_enterprise_techniques_risk_scores():
     print("------------------------STATISTICS OF ICS SCORES-------------------------------")
     print("MINIMUM SCORE: ", min_score)
     print("MAXIMUM SCORE: ",max_score)
+    average_score=round(sumof_scores/n_scores,2)
     print("AVERAGE SCORE: ",average_score)
+    print("NUMBER OF TECHNIQUES MAPPED: ",len(techniques))
+
+    # Creazione del grafico
+    plt.plot(scores)
+    plt.ylim(0, 10)
+    plt.axhline(y=average_score, color='r', linestyle='--', label=f'Media: {average_score}')
+    # Aggiunta di etichette
+    plt.xlabel('Numero di tecniche')
+    plt.ylabel('Valore Basescore')
+    plt.title('Grafico della mappatura dei risci delle tecniche in ICS')
+    # Aggiunta della legenda
+    plt.legend()
+    # Mostrare il grafico
+    plt.show()
 
 
 
