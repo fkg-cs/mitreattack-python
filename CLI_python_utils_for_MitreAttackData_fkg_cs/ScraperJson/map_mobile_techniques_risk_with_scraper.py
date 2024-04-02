@@ -295,7 +295,7 @@ def get_mobile_techniques_risk_scores():
     # Aggiunta di etichette
     plt.xlabel('Numero di tecniche')
     plt.ylabel('Valore Basescore')
-    plt.title('Grafico della mappatura dei risci delle tecniche in MOBILE')
+    plt.title('Grafico dei risk scores calcolati per le tecniche in MOBILE')
     # Aggiunta della legenda
     plt.legend()
     # Mostrare il grafico
