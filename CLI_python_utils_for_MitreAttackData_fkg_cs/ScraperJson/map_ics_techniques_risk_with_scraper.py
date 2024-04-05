@@ -241,6 +241,7 @@ def get_enterprise_techniques_risk_scores():
     sumof_scores = 0
     average_score = 0
     scores=[]
+    mapping = dict()
 
     #format of csv is Technique ATT&CK ID, [risk_score dictionary],'matchingCveIds': ['CVE-2024-0007',....., 'CVE-2024-0008'] list of cve ids matching
     output_string = "TECHNIQUE ATT&CK ID, CONGLOMERATE CVSS 3.1 RISK SCORES FROM CVE SCRAPING, LIST OF CVE ID MATCHING TECHNIQUE\n"
@@ -263,6 +264,7 @@ def get_enterprise_techniques_risk_scores():
             max_score = score
         output_string += f"{external_id},{risk_scores}\n"
         scores.append(risk_scores['baseScore'])
+        mapping[external_id] = risk_scores['baseScore']
 
     #scrivo su file
     with open('mapping_results\ics_techniques_riskscores_mapping.csv', 'w') as file:
@@ -275,6 +277,17 @@ def get_enterprise_techniques_risk_scores():
     average_score=round(sumof_scores/n_scores,2)
     print("AVERAGE SCORE: ",average_score)
     print("NUMBER OF TECHNIQUES MAPPED: ",len(techniques))
+
+
+    mapping = dict(sorted(mapping.items(), key=lambda x: x[1], reverse=True)[
+                   :10])  # ordino mapping in ordine descrescente per valore basescore e prendo i top 10
+    print("TOP 10 SCORES in ICS:")
+    i = 0
+    for chiave, valore in mapping.items():
+        i = i + 1
+        technique = mitre_attack_data.get_object_by_attack_id(chiave, 'attack-pattern')
+        print(f"{i}) {technique.name} (ATT&CK ID: {chiave}) SCORE [{valore}]")
+
 
     # Creazione del grafico
     plt.plot(scores)
